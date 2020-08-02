@@ -85,7 +85,7 @@ class TuneActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
                 val list = ArrayList<TuneItemInfo>()
 
-                list.add(TuneItemInfo("scale", json.getDouble("scale").toFloat(), 500.0f, 4000.0f, 100.0f, 1))
+                list.add(TuneItemInfo("scale", json.getDouble("scale").toFloat(), 500.0f, 5000.0f, 100.0f, 1))
                 list.add(TuneItemInfo("ki", json.getDouble("ki").toFloat(), 0.0f, 0.2f, 0.01f, 2))
 
                 list.add(TuneItemInfo("k_1", json.getDouble("k_1").toFloat(), -150.0f, -50.0f, 5.0f, 1))
