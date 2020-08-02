@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.TuneFragment">
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/btn_reset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textKey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/textMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text=""/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="~"/>
+
+            <TextView
+                android:id="@+id/textMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/textValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:textColor="#50B050"
+                android:text=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp">
+
+            <Button
+                android:id="@+id/btnDecrease"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:textSize="20sp"
+                android:text="@string/btn_decrease"/>
+
+            <Button
+                android:id="@+id/btnIncrease"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:textSize="20sp"
+                android:text="@string/btn_increase"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

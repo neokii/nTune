@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">nTune - LQR</string>
+
+    <string name="btn_connect">"Conntect"</string>
+    <string name="btn_reset">"Reset"</string>
+    <string name="btn_decrease">"Decrease (-)"</string>
+    <string name="btn_increase">"Increase (+)"</string>
+
+    <string name="conf_load_failed">"The configuration file could not be loaded from EON."</string>
+</resources>
