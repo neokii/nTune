@@ -1,5 +1,5 @@
 
-1. ntune.py 를 /data/openpilot/selfdrive 위치로 복사합니다.
+1. 본 프로젝트 루트폴더에 있는 ntune.py를 이온의 /data/openpilot/selfdrive 위치로 복사합니다.
 
 
 2. /data/openpilot/selfdrive/controls/lib/latcontrol_lqr.py 파일을 수정합니다.
@@ -21,7 +21,7 @@
     </code>
     </pre>
     
-    3) 48라인 근처 update 함수블럭 첫 줄에 추가
+    3) 47라인 근처 update 함수블럭 첫 줄에 추가, 버전마다 update함수의 인자가 조금씩 다를 수 있습니다.
     
     <pre>
     <code>
@@ -33,7 +33,6 @@
     
 
 3. 이온을 재부팅 후 최초한번 판다와 연결합니다.
-
 
 4. release폴더에 있는 apk파일을 안드로이드 기기에 설치에 실행하여 사용합니다.
 
