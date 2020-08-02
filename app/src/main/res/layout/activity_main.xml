@@ -23,7 +23,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            app:dropDownDrawable="@drawable/ic_launcher_foreground"
+            app:dropDownDrawable="@drawable/ic_arrow_drop_down"
             app:dropDownDrawableSpacing="15dp"
             app:dropDownDrawableWidth="25dp"
             app:dropDownDrawableHeight="25dp"
