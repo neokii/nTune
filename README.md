@@ -9,7 +9,6 @@
     <pre>
     <code>
     from selfdrive.ntune import nTune
-    
     </code>
     </pre>
     
@@ -19,7 +18,6 @@
     <code>
     self.reset()
     self.tune = nTune(CP, self) # 추가
-    
     </code>
     </pre>
     
@@ -29,7 +27,6 @@
     <code>
     def update(self, active, CS, CP, path_plan):
         self.tune.check() # 추가
-    
     </code>
     </pre>
             
@@ -38,4 +35,4 @@
 3. 이온을 최초한번 판다와 연결합니다.
 
 
-4. apk파일을 안드로이드 기기에 설치에 실행하여 사용합니다.
+4. release폴더에 있는 apk파일을 안드로이드 기기에 설치에 실행하여 사용합니다.
