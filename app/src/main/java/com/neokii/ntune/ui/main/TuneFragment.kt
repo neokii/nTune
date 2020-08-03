@@ -15,6 +15,14 @@ import com.neokii.ntune.TuneItemInfo
 import kotlinx.android.synthetic.main.fragment_tune.*
 import org.json.JSONObject
 import java.lang.Exception
+import kotlin.math.round
+import kotlin.math.roundToInt
+
+fun Float.round(decimals: Int): Float {
+    var multiplier = 1.0
+    repeat(decimals) { multiplier *= 10 }
+    return (round(this * multiplier) / multiplier).toFloat()
+}
 
 class TuneFragment : Fragment() {
 
@@ -159,11 +167,20 @@ class TuneFragment : Fragment() {
         })
     }
 
+
     private fun increase(step:Float)
     {
         try {
             var value = lastJson.getDouble(itemInfo.key).toFloat()
             value += step
+            value = value.round(itemInfo.precision)
+
+            if(value < itemInfo.min)
+                value = itemInfo.min
+
+            if(value > itemInfo.max)
+                value = itemInfo.max
+
             update(value)
         }
         catch (e:Exception){

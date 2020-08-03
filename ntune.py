@@ -117,28 +117,43 @@ class nTune():
     if self.checkValue("dcGain", 0.0020, 0.0040, 0.003):
       updated = True
       
+    if self.checkValue("steerActuatorDelay", 0.1, 0.8, 0.3):
+      updated = True
+
+    if self.checkValue("steerLimitTimer", 0.6, 1.5, 0.8):
+      updated = True
+
+    if self.checkValue("steerMax", 1.0, 2.0, 1.3):
+      updated = True
+
     return updated
-    
+
   def update(self):
-  
+
     self.lqr.scale = float(self.config["scale"])
     self.lqr.ki = float(self.config["ki"])
-    
+
     self.lqr.K = np.array([float(self.config["k_1"]), float(self.config["k_2"])]).reshape((1, 2))
     self.lqr.L = np.array([float(self.config["l_1"]), float(self.config["l_2"])]).reshape((2, 1))
-    
+
     self.lqr.dc_gain = float(self.config["dcGain"])
-    
+
+    self.CP.steerActuatorDelay = float(self.config["steerActuatorDelay"])
+    self.lqr.sat_limit = float(self.config["steerLimitTimer"])
+
+    self.CP.steerMaxBP = [0.0]
+    self.CP.steerMaxV = [float(self.config["steerMax"])]
+
     self.lqr.x_hat = np.array([[0], [0]])
     self.lqr.reset()
-    
+
   def read_cp(self):
-    
+
     self.config = {}
-    
+
     try:
       if self.CP is not None and self.CP.lateralTuning.which() == 'lqr':
-      
+
         self.config["scale"] = round(self.CP.lateralTuning.lqr.scale, 2)
         self.config["ki"] = round(self.CP.lateralTuning.lqr.ki, 3)
         self.config["k_1"] = round(self.CP.lateralTuning.lqr.k[0], 1)
@@ -146,6 +161,10 @@ class nTune():
         self.config["l_1"] = round(self.CP.lateralTuning.lqr.l[0], 3)
         self.config["l_2"] = round(self.CP.lateralTuning.lqr.l[1], 3)
         self.config["dcGain"] = round(self.CP.lateralTuning.lqr.dcGain, 5)
+
+        self.config["steerActuatorDelay"] = round(self.CP.steerActuatorDelay, 2)
+        self.config["steerLimitTimer"] = round(self.CP.steerLimitTimer, 2)
+        self.config["steerMax"] = round(self.CP.steerMaxV[0], 2)
         
     except:
       pass
