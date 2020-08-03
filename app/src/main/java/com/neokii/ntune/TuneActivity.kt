@@ -100,10 +100,10 @@ class TuneActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
                     0.1f, 0.8f, 0.05f, 2))
 
                 list.add(TuneItemInfo("steerLimitTimer", json.getDouble("steerLimitTimer").toFloat(),
-                    0.6f, 1.5f, 0.05f, 2))
+                    0.5f, 3.0f, 0.05f, 2))
 
                 list.add(TuneItemInfo("steerMax", json.getDouble("steerMax").toFloat(),
-                    1.0f, 2.0f, 0.05f, 2))
+                    0.5f, 3.0f, 0.05f, 2))
 
                 sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager, list, it.getStringExtra("host"))
                 val viewPager: ViewPager = findViewById(R.id.view_pager)
