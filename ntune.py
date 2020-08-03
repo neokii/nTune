@@ -120,7 +120,7 @@ class nTune():
     if self.checkValue("steerActuatorDelay", 0.1, 0.8, 0.1):
       updated = True
 
-    if self.checkValue("steerLimitTimer", 0.3, 3.0, 0.8):
+    if self.checkValue("steerLimitTimer", 0.5, 3.0, 0.8):
       updated = True
 
     if self.checkValue("steerMax", 0.5, 3.0, 1.0):
