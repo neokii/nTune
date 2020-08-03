@@ -1,5 +1,7 @@
+https://github.com/neokii/nTune/releases
 
-1. 본 프로젝트 루트폴더에 있는 ntune.py를 이온의 /data/openpilot/selfdrive 위치로 복사합니다.
+
+1. ntune.py를 이온의 /data/openpilot/selfdrive 위치로 복사합니다.
 
 
 2. /data/openpilot/selfdrive/controls/lib/latcontrol_lqr.py 파일을 수정합니다.
