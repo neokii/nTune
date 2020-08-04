@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONArray
-import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,10 +17,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
         setContentView(R.layout.activity_main)
 
         val hosts = SettingUtil.getStringList(applicationContext, "hosts") as List<String>
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, hosts)
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, hosts)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinnerHost.setAdapter(adapter)
 
@@ -44,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         val host = spinnerHost.text.toString();
         if(!host.isEmpty())
         {
+            btnConnect.isEnabled = false
+
             val imm: InputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(spinnerHost.getWindowToken(), 0)
@@ -52,6 +56,8 @@ class MainActivity : AppCompatActivity() {
             session?.connect(object: SshSession.OnConnectListener
             {
                 override fun onConnect() {
+
+                    btnConnect.isEnabled = true
 
                     val hosts = SettingUtil.getStringList(applicationContext, "hosts")
                     hosts.remove(host)
@@ -64,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onFail(e: Exception) {
+                    btnConnect.isEnabled = true
                     Snackbar.make(findViewById(android.R.id.content), e.localizedMessage, Snackbar.LENGTH_SHORT)
                         .show()
                 }

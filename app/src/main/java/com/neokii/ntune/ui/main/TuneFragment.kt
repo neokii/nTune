@@ -1,22 +1,28 @@
 package com.neokii.ntune.ui.main
 
+import android.R.attr.fontStyle
 import android.os.Bundle
 import android.os.Handler
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.snackbar.Snackbar
 import com.neokii.ntune.R
+import com.neokii.ntune.SettingUtil
 import com.neokii.ntune.SshSession
 import com.neokii.ntune.TuneItemInfo
 import kotlinx.android.synthetic.main.fragment_tune.*
+import kotlinx.android.synthetic.main.fragment_tune.view.*
 import org.json.JSONObject
-import java.lang.Exception
 import kotlin.math.round
-import kotlin.math.roundToInt
+
 
 fun Float.round(decimals: Int): Float {
     var multiplier = 1.0
@@ -84,29 +90,76 @@ class TuneFragment : Fragment() {
         textKey.text = itemInfo.key
         textMin.text = itemInfo.toString(itemInfo.min)
         textMax.text = itemInfo.toString(itemInfo.max)
-        textStep.text = "Step: ${itemInfo.step}"
+
+        updateStepScale()
 
         btnIncrease.setOnClickListener {
-            increase(1.0f * itemInfo.step)
+            increase(1.0f * getStep())
         }
 
         btnDecrease.setOnClickListener {
-            increase(-1.0f * itemInfo.step)
+            increase(-1.0f * getStep())
         }
 
         btnIncrease.setOnLongClickListener {
-            increase(10.0f * itemInfo.step)
+            increase(10.0f * getStep())
             return@setOnLongClickListener true
         }
 
         btnDecrease.setOnLongClickListener {
-            increase(-10.0f * itemInfo.step)
+            increase(-10.0f * getStep())
             return@setOnLongClickListener true
         }
 
         btnReset.setOnClickListener {
             update(itemInfo.defValue)
         }
+
+        activity?.let {
+            val items = arrayOf("x0.1", "x0.5", "x1", "x5", "x10")
+
+            spinnerStepScale.adapter =
+                ArrayAdapter(it.applicationContext, R.layout.spinner_text,
+                    items).apply {
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
+
+            spinnerStepScale.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    SettingUtil.setInt(activity, "item_step_scale_" + itemInfo.key, position)
+                    updateStepScale()
+                }
+            }
+
+            spinnerStepScale.setSelection(SettingUtil.getInt(activity, "item_step_scale_" + itemInfo.key, 2))
+        }
+
+
+    }
+
+    private fun getStep(): Float
+    {
+        try {
+            val index = SettingUtil.getInt(activity, "item_step_scale_" + itemInfo.key, 2)
+            val v = arrayOf(0.1f, 0.5f, 1.0f, 5.0f, 10.0f)
+            return itemInfo.step*v[index]
+        }
+        catch (e: Exception){}
+        return itemInfo.step
+    }
+
+    private fun updateStepScale()
+    {
+        textStep.text = "Step: ${getStep()}"
     }
 
     override fun onResume() {

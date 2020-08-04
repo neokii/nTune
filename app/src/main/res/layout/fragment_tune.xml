@@ -7,6 +7,46 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.TuneFragment">
 
+    <LinearLayout
+        android:id="@+id/layoutStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:layout_gravity="center_vertical"
+            android:text="Step Scale:"
+            />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinnerStepScale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="15dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutStep"
+        />
+
     <Button
         android:id="@+id/btnReset"
         android:layout_width="wrap_content"
@@ -115,16 +155,6 @@
                 android:text="@string/btn_increase"/>
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/textStep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            />
 
     </LinearLayout>
 
