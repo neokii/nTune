@@ -4,7 +4,12 @@ https://github.com/neokii/nTune/releases
 1. ntune.py를 이온의 /data/openpilot/selfdrive 위치로 복사합니다.
 
 
-2. /data/openpilot/selfdrive/controls/lib/latcontrol_lqr.py 파일을 수정합니다.
+2.
+
+    LQR - /data/openpilot/selfdrive/controls/lib/latcontrol_lqr.py
+    INDI - /data/openpilot/selfdrive/controls/lib/latcontrol_indi.py
+
+    의 파일을 아래와 같이 몇가지 추가합니다.
 
     1) 맨상단에 아래를 추가합니다.
     
@@ -27,7 +32,7 @@ https://github.com/neokii/nTune/releases
     
     <pre>
     <code>
-    def update(self, active, CS, CP, path_plan):
+    def update(self, ..........):
         self.tune.check() # 추가
     </code>
     </pre>
