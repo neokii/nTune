@@ -4,7 +4,7 @@ https://github.com/neokii/nTune/releases
 1. ntune.py를 이온의 /data/openpilot/selfdrive 위치로 복사합니다.
 
 
-2.
+2. 각차량 interface에서 lqr 또는 indi가 지정되어야 동작합니다. 예) ret.lateralTuning.init('lqr')
 
     LQR - /data/openpilot/selfdrive/controls/lib/latcontrol_lqr.py
     INDI - /data/openpilot/selfdrive/controls/lib/latcontrol_indi.py
