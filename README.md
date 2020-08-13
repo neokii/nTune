@@ -6,6 +6,7 @@ https://github.com/neokii/nTune/releases
 
 2. 각차량 interface에서 lqr 또는 indi가 지정되어야 동작합니다. 예) ret.lateralTuning.init('lqr')
 
+    <pre>
     LQR - /data/openpilot/selfdrive/controls/lib/latcontrol_lqr.py
     INDI - /data/openpilot/selfdrive/controls/lib/latcontrol_indi.py
 
@@ -25,7 +26,7 @@ https://github.com/neokii/nTune/releases
     def update(self, ..........):
         self.tune.check() # 추가
             
-    
+    </pre>
 
 3. 이온을 재부팅 후 최초한번 판다와 연결합니다.
 
