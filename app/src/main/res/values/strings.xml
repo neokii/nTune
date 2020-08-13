@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">nTune - LQR</string>
+    <string name="app_name">nTune</string>
 
-    <string name="btn_connect">"Conntect"</string>
+    <string name="btn_connect_lqr">"Connect for LQR"</string>
+    <string name="btn_connect_indi">"Connect for INDI"</string>
+
     <string name="btn_reset">"Reset"</string>
     <string name="btn_decrease">"Decrease (-)"</string>
     <string name="btn_increase">"Increase (+)"</string>

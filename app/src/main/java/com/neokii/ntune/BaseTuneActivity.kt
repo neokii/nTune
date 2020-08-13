@@ -2,28 +2,27 @@ package com.neokii.ntune
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.view.WindowManager
 import com.neokii.ntune.ui.main.SectionsPagerAdapter
 import com.neokii.ntune.ui.main.TuneFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TuneActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
+abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
     var viewPager: ViewPager? = null
     var sectionsPagerAdapter: SectionsPagerAdapter? = null
 
     var tts: TextToSpeech? = null
+
+    abstract fun getRemoteConfFile(): String
+    abstract fun getItemList(json: JSONObject): ArrayList<TuneItemInfo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +44,7 @@ class TuneActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
             val session = SshSession(it.getStringExtra("host"), 8022)
             session.connect(object : SshSession.OnConnectListener{
                 override fun onConnect() {
-                    session.send("cat ${TuneFragment.CONF_FILE}", object : SshSession.OnResponseListener{
+                    session.send("cat ${getRemoteConfFile()}", object : SshSession.OnResponseListener{
                         override fun onResponse(res: String) {
                             start(res)
                         }
@@ -82,19 +81,7 @@ class TuneActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
             try {
 
                 val json = JSONObject(res)
-
-                val list = ArrayList<TuneItemInfo>()
-
-                list.add(TuneItemInfo("scale", json.getDouble("scale").toFloat(), 500.0f, 5000.0f, 50.0f, 1))
-                list.add(TuneItemInfo("ki", json.getDouble("ki").toFloat(), 0.0f, 0.2f, 0.01f, 3))
-
-                list.add(TuneItemInfo("k_1", json.getDouble("k_1").toFloat(), -150.0f, -50.0f, 5.0f, 1))
-                list.add(TuneItemInfo("k_2", json.getDouble("k_2").toFloat(), 400.0f, 500.0f, 5.0f, 1))
-
-                list.add(TuneItemInfo("l_1", json.getDouble("l_1").toFloat(), 0.1f, 0.5f, 0.01f, 3))
-                list.add(TuneItemInfo("l_2", json.getDouble("l_2").toFloat(), 0.1f, 0.5f, 0.01f, 3))
-
-                list.add(TuneItemInfo("dcGain", json.getDouble("dcGain").toFloat(), 0.0020f, 0.0040f, 0.0001f, 5))
+                val list = getItemList(json)
 
                 list.add(TuneItemInfo("steerActuatorDelay", json.getDouble("steerActuatorDelay").toFloat(),
                     0.1f, 0.8f, 0.05f, 3))
@@ -105,7 +92,9 @@ class TuneActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
                 list.add(TuneItemInfo("steerMax", json.getDouble("steerMax").toFloat(),
                     0.5f, 3.0f, 0.05f, 3))
 
-                sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager, list, it.getStringExtra("host"))
+                sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager, list,
+                    it.getStringExtra("host"),
+                    getRemoteConfFile())
                 val viewPager: ViewPager = findViewById(R.id.view_pager)
                 viewPager.adapter = sectionsPagerAdapter
                 val tabs: TabLayout = findViewById(R.id.tabs)

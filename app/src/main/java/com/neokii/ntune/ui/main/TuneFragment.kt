@@ -1,15 +1,12 @@
 package com.neokii.ntune.ui.main
 
-import android.R.attr.fontStyle
 import android.os.Bundle
 import android.os.Handler
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,7 +16,6 @@ import com.neokii.ntune.SettingUtil
 import com.neokii.ntune.SshSession
 import com.neokii.ntune.TuneItemInfo
 import kotlinx.android.synthetic.main.fragment_tune.*
-import kotlinx.android.synthetic.main.fragment_tune.view.*
 import org.json.JSONObject
 import kotlin.math.round
 
@@ -35,21 +31,21 @@ class TuneFragment : Fragment() {
     private lateinit var itemInfo: TuneItemInfo
     private lateinit var tuneViewModel: TuneViewModel
 
+    private lateinit var remoteConfFile: String
     private lateinit var host: String
     private var session: SshSession? = null
 
     companion object {
-
-        val CONF_FILE = "/data/ntune/lat_lqr.json"
         var lastJson = JSONObject()
 
         @JvmStatic
-        fun newInstance(itemInfo: TuneItemInfo, host:String): TuneFragment {
+        fun newInstance(itemInfo: TuneItemInfo, host:String, remoteConfFile:String): TuneFragment {
 
             return TuneFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable("item", itemInfo)
                     putString("host", host)
+                    putString("remoteConfFile", remoteConfFile)
                 }
             }
         }
@@ -60,6 +56,7 @@ class TuneFragment : Fragment() {
 
         arguments?.let {
 
+            remoteConfFile = it.getString("remoteConfFile", "")
             host = it.getString("host", "")
             itemInfo = it.getParcelable("item")!!
             tuneViewModel = ViewModelProviders.of(this).get(TuneViewModel::class.java).apply {
@@ -199,7 +196,7 @@ class TuneFragment : Fragment() {
     private fun updateValue()
     {
         enableButtons(false)
-        session?.send("cat $CONF_FILE", object : SshSession.OnResponseListener{
+        session?.send("cat $remoteConfFile", object : SshSession.OnResponseListener{
             override fun onResponse(res: String) {
                 try {
                     lastJson = JSONObject(res)
@@ -247,7 +244,7 @@ class TuneFragment : Fragment() {
             lastJson.put(itemInfo.key, value)
 
             enableButtons(false)
-            session?.send("echo '${lastJson.toString(2)}' > $CONF_FILE", object : SshSession.OnResponseListener{
+            session?.send("echo '${lastJson.toString(2)}' > $remoteConfFile", object : SshSession.OnResponseListener{
                 override fun onResponse(res: String) {
                     updateValue()
                     enableButtons(true)

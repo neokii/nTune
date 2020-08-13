@@ -22,16 +22,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val hosts = SettingUtil.getStringList(applicationContext, "hosts") as List<String>
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, hosts)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val adapter = ArrayAdapter<String>(this, R.layout.spinner_item, hosts)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
 
         spinnerHost.setAdapter(adapter)
 
         if(hosts.isNotEmpty())
             spinnerHost.setText(hosts[0])
 
-        btnConnect.setOnClickListener {
-            handleConnect()
+        btnConnectLqr.setOnClickListener {
+            handleConnect(true)
+        }
+
+        btnConnectIndi.setOnClickListener {
+            handleConnect(false)
         }
     }
 
@@ -41,12 +45,13 @@ class MainActivity : AppCompatActivity() {
         session?.close()
     }
 
-    fun handleConnect()
+    fun handleConnect(isLqr: Boolean)
     {
         val host = spinnerHost.text.toString();
         if(!host.isEmpty())
         {
-            btnConnect.isEnabled = false
+            btnConnectLqr.isEnabled = false
+            btnConnectIndi.isEnabled = false
 
             val imm: InputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -57,20 +62,24 @@ class MainActivity : AppCompatActivity() {
             {
                 override fun onConnect() {
 
-                    btnConnect.isEnabled = true
+                    btnConnectLqr.isEnabled = true
+                    btnConnectIndi.isEnabled = true
 
                     val hosts = SettingUtil.getStringList(applicationContext, "hosts")
                     hosts.remove(host)
                     hosts.add(0, host)
                     SettingUtil.setStringList(applicationContext, "hosts", hosts)
 
-                    val intent = Intent(this@MainActivity, TuneActivity::class.java)
+                    val intent = Intent(this@MainActivity,
+                        if(isLqr) LqrTuneActivity::class.java else IndiTuneActivity::class.java)
+
                     intent.putExtra("host", host)
                     startActivity(intent)
                 }
 
                 override fun onFail(e: Exception) {
-                    btnConnect.isEnabled = true
+                    btnConnectLqr.isEnabled = true
+                    btnConnectIndi.isEnabled = true
                     Snackbar.make(findViewById(android.R.id.content), e.localizedMessage, Snackbar.LENGTH_SHORT)
                         .show()
                 }

@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">nTune - LQR</string>
+    <string name="app_name">nTune</string>
 
-    <string name="btn_connect">"연결"</string>
+    <string name="btn_connect_lqr">"LQR로 연결"</string>
+    <string name="btn_connect_indi">"INDI로 연결"</string>
+
     <string name="btn_reset">"재설정"</string>
     <string name="btn_decrease">"내리기 (-)"</string>
     <string name="btn_increase">"올리기 (+)"</string>
