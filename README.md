@@ -13,29 +13,17 @@ https://github.com/neokii/nTune/releases
 
     1) 맨상단에 아래를 추가합니다.
     
-    <pre>
-    <code>
     from selfdrive.ntune import nTune
-    </code>
-    </pre>
     
-    2) 27라인 근처 self.reset() 아래에
+    2) lqr:27라인, indi:46라인 근처 self.reset() 아래에
     
-    <pre>
-    <code>
     self.reset()
     self.tune = nTune(CP, self) # 추가
-    </code>
-    </pre>
     
-    3) 47라인 근처 update 함수블럭 첫 줄에 추가, 버전마다 update함수의 인자가 조금씩 다를 수 있습니다.
+    3) lqr:47라인, indi:66라인 근처 update 함수블럭 첫 줄에 추가합니다.
     
-    <pre>
-    <code>
     def update(self, ..........):
         self.tune.check() # 추가
-    </code>
-    </pre>
             
     
 
