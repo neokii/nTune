@@ -14,7 +14,7 @@ https://github.com/neokii/nTune/releases
 
    ##### 1) 맨상단에 아래를 추가합니다.
     
-    <font color=red>from selfdrive.ntune import nTune</font>
+    **from selfdrive.ntune import nTune**
     
    ##### 2) lqr:27라인, indi:46라인 근처 self.reset() 아래에
     
