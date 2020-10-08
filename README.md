@@ -7,8 +7,9 @@ https://github.com/neokii/nTune/releases
 2. 각차량 interface에서 lqr 또는 indi가 지정되어야 동작합니다. 예) ret.lateralTuning.init('lqr')
 
     <pre>
-    LQR - /data/openpilot/selfdrive/controls/lib/latcontrol_lqr.py
-    INDI - /data/openpilot/selfdrive/controls/lib/latcontrol_indi.py
+    selfdrive/controls/lib/pathplanner.py
+    selfdrive/controls/lib/latcontrol_lqr.py
+    selfdrive/controls/lib/latcontrol_indi.py
 
     의 파일을 아래와 같이 몇가지 추가합니다.
 
@@ -25,6 +26,14 @@ https://github.com/neokii/nTune/releases
     
     def update(self, ..........):
         self.tune.check() # 추가
+
+    4) steerRatio, steerActuatorDelay 추가
+
+     pathplanner.py 의 102라인 근처  VM.update_params(...) 호출되는 바로 아래에
+     VM.sr = self.tune.get('steerRatio') # 추가
+
+     118라인 근처 calc_states_after_delay 함수 호출부분 마지막 인자를
+     CP.steerActuatorDelay -> self.tune.get('steerActuatorDelay') 로 수정
             
     </pre>
 
