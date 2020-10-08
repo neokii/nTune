@@ -19,12 +19,12 @@ https://github.com/neokii/nTune/releases
    ### 2) lqr:27라인, indi:46라인 근처 self.reset() 아래에
     
     self.reset()<br/>
-    **self.tune = nTune(CP, self)** # 추가
+    **<span style="color:blue">self.tune = nTune(CP, self)** # 추가
     
    ### 3) lqr:47라인, indi:66라인 근처 update 함수블럭 첫 줄에 추가합니다.
     
     def update(self, ..........):<br/>
-    &nbsp;&nbsp;&nbsp;&nbsp;**self.tune.check()** # 추가
+    &nbsp;&nbsp;&nbsp;&nbsp;**<span style="color:blue">self.tune.check()** # 추가
 
    ### 4) steerRatio, steerActuatorDelay 추가
 
@@ -34,13 +34,13 @@ https://github.com/neokii/nTune/releases
     self.prev_torque_applied = False<br/>
     아래
 
-    **self.tune = nTune(CP)** # 추가
+    **<span style="color:blue">self.tune = nTune(CP)</span>** # 추가
 
      102라인 근처  VM.update_params(...) 호출되는 바로 아래에<br/>
-    **VM.sr = self.tune.get('steerRatio')** # 추가
+    **<span style="color:blue">VM.sr = self.tune.get('steerRatio')** # 추가
 
     118라인 근처 calc_states_after_delay 함수 호출부분 마지막 인자를<br/>
-    CP.steerActuatorDelay -> **self.tune.get('steerActuatorDelay')** 로 수정
+    CP.steerActuatorDelay -> **<span style="color:blue">self.tune.get('steerActuatorDelay')** 로 수정
 
 
 3. 이온을 재부팅 후 최초한번 판다와 연결합니다.
