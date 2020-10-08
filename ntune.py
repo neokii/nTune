@@ -6,12 +6,12 @@ import numpy as np
 from common.realtime import DT_CTRL
 
 CONF_PATH = '/data/ntune/'
+CONF_COMMON_FILE = '/data/ntune/common.json'
 CONF_LQR_FILE = '/data/ntune/lat_lqr.json'
 CONF_INDI_FILE = '/data/ntune/lat_indi.json'
 
-
 class nTune():
-  def __init__(self, CP, controller):
+  def __init__(self, CP, controller=None):
 
     self.invalidated = False
 
@@ -26,12 +26,13 @@ class nTune():
       self.lqr.A = np.array([0., 1., -0.22619643, 1.21822268]).reshape((2, 2))
       self.lqr.B = np.array([-1.92006585e-04, 3.95603032e-05]).reshape((2, 1))
       self.lqr.C = np.array([1., 0.]).reshape((1, 2))
+      self.lqr.K = np.array([-110., 451.]).reshape((1, 2))
+      self.lqr.L = np.array([0.33, 0.318]).reshape((2, 1))
     elif "LatControlINDI" in str(type(controller)):
       self.indi = controller
       self.file = CONF_INDI_FILE
-
     else:
-      raise Exception("Not Supported controller")
+      self.file = CONF_COMMON_FILE
 
     if not os.path.exists(CONF_PATH):
       os.makedirs(CONF_PATH)
@@ -107,48 +108,54 @@ class nTune():
   def checkValid(self):
 
     if self.lqr is not None:
-      self.checkValidLQR()
+      return self.checkValidLQR()
+    elif self.indi is not None:
+      return self.checkValidINDI()
     else:
-      self.checkValidINDI()
+      return self.checkValidCommon()
 
   def update(self):
 
     if self.lqr is not None:
       self.updateLQR()
-    else:
+    elif self.indi is not None:
       self.updateINDI()
+
+  def get(self, key):
+    v = self.config[key]
+    if v is None:
+      self.read()
+      v = self.config[key]
+
+    return v
+
+  def checkValidCommon(self):
+    updated = False
+
+    if self.checkValue("steerRatio", 5.0, 25.0, 12.5):
+      updated = True
+
+    if self.checkValue("steerActuatorDelay", 0.1, 0.8, 0.2):
+      updated = True
+
+    return updated
 
   def checkValidLQR(self):
     updated = False
 
-    if self.checkValue("scale", 500.0, 5000.0, 2000.0):
+    if self.checkValue("scale", 500.0, 5000.0, 1500.0):
       updated = True
 
-    if self.checkValue("ki", 0.0, 0.2, 0.01):
+    if self.checkValue("ki", 0.0, 0.2, 0.025):
       updated = True
 
-    if self.checkValue("k_1", -150.0, -50.0, -100.0):
+    if self.checkValue("dcGain", 0.0020, 0.0040, 0.00225):
       updated = True
 
-    if self.checkValue("k_2", 400.0, 500.0, 450.0):
+    if self.checkValue("steerLimitTimer", 0.5, 3.0, 2.0):
       updated = True
 
-    if self.checkValue("l_1", 0.1, 0.5, 0.22):
-      updated = True
-
-    if self.checkValue("l_2", 0.1, 0.5, 0.32):
-      updated = True
-
-    if self.checkValue("dcGain", 0.0020, 0.0040, 0.003):
-      updated = True
-
-    if self.checkValue("steerActuatorDelay", 0.1, 0.8, 0.1):
-      updated = True
-
-    if self.checkValue("steerLimitTimer", 0.5, 3.0, 0.8):
-      updated = True
-
-    if self.checkValue("steerMax", 0.5, 3.0, 1.0):
+    if self.checkValue("steerMax", 0.5, 3.0, 1.8):
       updated = True
 
     return updated
@@ -168,9 +175,6 @@ class nTune():
     if self.checkValue("actuatorEffectiveness", 0.1, 5.0, 1.7):
       updated = True
 
-    if self.checkValue("steerActuatorDelay", 0.1, 0.8, 0.1):
-      updated = True
-
     if self.checkValue("steerLimitTimer", 0.5, 3.0, 0.8):
       updated = True
 
@@ -184,12 +188,8 @@ class nTune():
     self.lqr.scale = float(self.config["scale"])
     self.lqr.ki = float(self.config["ki"])
 
-    self.lqr.K = np.array([float(self.config["k_1"]), float(self.config["k_2"])]).reshape((1, 2))
-    self.lqr.L = np.array([float(self.config["l_1"]), float(self.config["l_2"])]).reshape((2, 1))
-
     self.lqr.dc_gain = float(self.config["dcGain"])
 
-    self.CP.steerActuatorDelay = float(self.config["steerActuatorDelay"])
     self.lqr.sat_limit = float(self.config["steerLimitTimer"])
 
     self.CP.steerMaxBP = [0.0]
@@ -206,7 +206,6 @@ class nTune():
     self.indi.inner_loop_gain = float(self.config["innerLoopGain"])
     self.indi.alpha = 1. - DT_CTRL / (self.indi.RC + DT_CTRL)
 
-    self.CP.steerActuatorDelay = float(self.config["steerActuatorDelay"])
     self.indi.sat_limit = float(self.config["steerLimitTimer"])
 
     self.CP.steerMaxBP = [0.0]
@@ -221,24 +220,24 @@ class nTune():
     try:
       if self.CP is not None:
 
-        if self.CP.lateralTuning.which() == 'lqr':
+        if self.CP.lateralTuning.which() == 'lqr' and self.lqr is not None:
           self.config["scale"] = round(self.CP.lateralTuning.lqr.scale, 2)
           self.config["ki"] = round(self.CP.lateralTuning.lqr.ki, 3)
-          self.config["k_1"] = round(self.CP.lateralTuning.lqr.k[0], 1)
-          self.config["k_2"] = round(self.CP.lateralTuning.lqr.k[1], 1)
-          self.config["l_1"] = round(self.CP.lateralTuning.lqr.l[0], 3)
-          self.config["l_2"] = round(self.CP.lateralTuning.lqr.l[1], 3)
           self.config["dcGain"] = round(self.CP.lateralTuning.lqr.dcGain, 5)
+          self.config["steerLimitTimer"] = round(self.CP.steerLimitTimer, 2)
+          self.config["steerMax"] = round(self.CP.steerMaxV[0], 2)
 
-        elif self.CP.lateralTuning.which() == 'indi':
+        elif self.CP.lateralTuning.which() == 'indi' and self.indi is not None:
           self.config["innerLoopGain"] = round(self.CP.lateralTuning.indi.innerLoopGain, 2)
           self.config["outerLoopGain"] = round(self.CP.lateralTuning.indi.outerLoopGain, 2)
           self.config["timeConstant"] = round(self.CP.lateralTuning.indi.timeConstant, 2)
           self.config["actuatorEffectiveness"] = round(self.CP.lateralTuning.indi.actuatorEffectiveness, 2)
+          self.config["steerLimitTimer"] = round(self.CP.steerLimitTimer, 2)
+          self.config["steerMax"] = round(self.CP.steerMaxV[0], 2)
 
-        self.config["steerActuatorDelay"] = round(self.CP.steerActuatorDelay, 2)
-        self.config["steerLimitTimer"] = round(self.CP.steerLimitTimer, 2)
-        self.config["steerMax"] = round(self.CP.steerMaxV[0], 2)
+        else:
+          self.config["steerRatio"] = round(self.CP.steerRatio, 2)
+          self.config["steerActuatorDelay"] = round(self.CP.steerActuatorDelay, 2)
 
     except:
       pass

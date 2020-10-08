@@ -10,13 +10,18 @@ class IndiTuneActivity: BaseTuneActivity() {
 
     override fun getItemList(json: JSONObject): ArrayList<TuneItemInfo> {
 
-        val list = ArrayList<TuneItemInfo>()
+        return  ArrayList<TuneItemInfo>().also {
 
-        list.add(TuneItemInfo("innerLoopGain", json.getDouble("innerLoopGain").toFloat(), 0.5f, 10.0f, 0.05f, 3))
-        list.add(TuneItemInfo("outerLoopGain", json.getDouble("outerLoopGain").toFloat(), 0.5f, 10.0f, 0.05f, 3))
-        list.add(TuneItemInfo("timeConstant", json.getDouble("timeConstant").toFloat(), 0.1f, 5.0f, 0.05f, 3))
-        list.add(TuneItemInfo("actuatorEffectiveness", json.getDouble("actuatorEffectiveness").toFloat(), 0.1f, 5.0f, 0.05f, 3))
+            it.add(TuneItemInfo("innerLoopGain", json.getDouble("innerLoopGain").toFloat(), 0.5f, 10.0f, 0.05f, 3))
+            it.add(TuneItemInfo("outerLoopGain", json.getDouble("outerLoopGain").toFloat(), 0.5f, 10.0f, 0.05f, 3))
+            it.add(TuneItemInfo("timeConstant", json.getDouble("timeConstant").toFloat(), 0.1f, 5.0f, 0.05f, 3))
+            it.add(TuneItemInfo("actuatorEffectiveness", json.getDouble("actuatorEffectiveness").toFloat(), 0.1f, 5.0f, 0.05f, 3))
 
-        return list
+            it.add(TuneItemInfo("steerLimitTimer", json.getDouble("steerLimitTimer").toFloat(),
+                0.5f, 3.0f, 0.05f, 3))
+
+            it.add(TuneItemInfo("steerMax", json.getDouble("steerMax").toFloat(),
+                0.5f, 3.0f, 0.05f, 3))
+        }
     }
 }

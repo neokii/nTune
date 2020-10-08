@@ -196,7 +196,7 @@ class TuneFragment : Fragment() {
     private fun updateValue()
     {
         enableButtons(false)
-        session?.send("cat $remoteConfFile", object : SshSession.OnResponseListener{
+        session?.exec("cat $remoteConfFile", object : SshSession.OnResponseListener{
             override fun onResponse(res: String) {
                 try {
                     lastJson = JSONObject(res)
@@ -206,11 +206,9 @@ class TuneFragment : Fragment() {
                     }
                 }
                 catch (e:Exception){}
-
-                enableButtons(true)
             }
 
-            override fun onFail(e: Exception) {
+            override fun onEnd(e: Exception?) {
                 enableButtons(true)
             }
 
@@ -244,16 +242,15 @@ class TuneFragment : Fragment() {
             lastJson.put(itemInfo.key, value)
 
             enableButtons(false)
-            session?.send("echo '${lastJson.toString(2)}' > $remoteConfFile", object : SshSession.OnResponseListener{
+            session?.exec("echo '${lastJson.toString(2)}' > $remoteConfFile", object : SshSession.OnResponseListener{
                 override fun onResponse(res: String) {
                     updateValue()
-                    enableButtons(true)
-                    sendInvalidate()
                 }
 
-                override fun onFail(e: Exception) {
+                override fun onEnd(e: Exception?) {
                     enableButtons(true)
-                    showSnackbar(e.localizedMessage)
+                    if (e != null)
+                        showSnackbar(e.localizedMessage)
                 }
             })
         }
@@ -281,7 +278,7 @@ class TuneFragment : Fragment() {
     {
         try {
             activity?.let {
-                Snackbar.make(it.findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT)
+                Snackbar.make(it.findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG)
                     .show()
             }
         }

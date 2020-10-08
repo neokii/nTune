@@ -8,7 +8,6 @@ import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
 import com.neokii.ntune.ui.main.SectionsPagerAdapter
-import com.neokii.ntune.ui.main.TuneFragment
 import org.json.JSONObject
 import java.lang.Exception
 import java.util.*
@@ -44,20 +43,23 @@ abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeLis
             val session = SshSession(it.getStringExtra("host"), 8022)
             session.connect(object : SshSession.OnConnectListener{
                 override fun onConnect() {
-                    session.send("cat ${getRemoteConfFile()}", object : SshSession.OnResponseListener{
+                    session.exec("cat ${getRemoteConfFile()}", object : SshSession.OnResponseListener{
                         override fun onResponse(res: String) {
                             start(res)
                         }
 
-                        override fun onFail(e: Exception) {
-                            Snackbar.make(findViewById(android.R.id.content), e.localizedMessage, Snackbar.LENGTH_SHORT)
-                                .show()
+                        override fun onEnd(e: Exception?) {
+
+                            if (e != null) {
+                                Snackbar.make(findViewById(android.R.id.content), e.localizedMessage, Snackbar.LENGTH_LONG)
+                                    .show()
+                            }
                         }
                     })
                 }
 
                 override fun onFail(e: Exception) {
-                    Snackbar.make(findViewById(android.R.id.content), e.localizedMessage, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(findViewById(android.R.id.content), e.localizedMessage, Snackbar.LENGTH_LONG)
                         .show()
                 }
 
@@ -83,15 +85,6 @@ abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeLis
                 val json = JSONObject(res)
                 val list = getItemList(json)
 
-                list.add(TuneItemInfo("steerActuatorDelay", json.getDouble("steerActuatorDelay").toFloat(),
-                    0.1f, 0.8f, 0.05f, 3))
-
-                list.add(TuneItemInfo("steerLimitTimer", json.getDouble("steerLimitTimer").toFloat(),
-                    0.5f, 3.0f, 0.05f, 3))
-
-                list.add(TuneItemInfo("steerMax", json.getDouble("steerMax").toFloat(),
-                    0.5f, 3.0f, 0.05f, 3))
-
                 sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager, list,
                     it.getStringExtra("host"),
                     getRemoteConfFile())
@@ -106,12 +99,12 @@ abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeLis
             {
                 if(res.isEmpty())
                 {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.conf_load_failed, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(findViewById(android.R.id.content), R.string.conf_load_failed, Snackbar.LENGTH_LONG)
                         .show()
                 }
                 else
                 {
-                    Snackbar.make(findViewById(android.R.id.content), e.localizedMessage, Snackbar.LENGTH_SHORT)
+                    Snackbar.make(findViewById(android.R.id.content), e.localizedMessage, Snackbar.LENGTH_LONG)
                         .show()
                 }
             }

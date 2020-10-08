@@ -1,12 +1,24 @@
 <resources>
     <string name="app_name">nTune</string>
 
-    <string name="btn_connect_lqr">"Connect for LQR"</string>
-    <string name="btn_connect_indi">"Connect for INDI"</string>
+    <string name="btn_scan">"Scan"</string>
+
+    <string name="format_scan_success">"Found EON: %s"</string>
+    <string name="scan_fail">"Couldn't find EON."</string>
+
+    <string name="btn_connect_common">"Common"</string>
+    <string name="btn_connect_lqr">"LQR"</string>
+    <string name="btn_connect_indi">"INDI"</string>
+
+    <string name="btn_clear_addresses">"Remove All"</string>
+    <string name="confirm_clear_addresses">"Are you sure you want to remove all?"</string>
 
     <string name="btn_reset">"Reset"</string>
     <string name="btn_decrease">"Decrease (-)"</string>
     <string name="btn_increase">"Increase (+)"</string>
 
-    <string name="conf_load_failed">"The configuration file could not be loaded from EON."</string>
+    <string name="conf_load_failed">"The configuration file could not be loaded from EON.
+You must be connected to the panda at least once."</string>
+
+    <string name="confirm">"Are you sure?"</string>
 </resources>
