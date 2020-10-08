@@ -12,21 +12,21 @@ https://github.com/neokii/nTune/releases
 
     의 파일을 아래와 같이 몇가지 추가합니다.
 
-    1) 맨상단에 아래를 추가합니다.
+   #### 맨상단에 아래를 추가합니다.
     
     **from selfdrive.ntune import nTune**
     
-    2) lqr:27라인, indi:46라인 근처 self.reset() 아래에
+   #### lqr:27라인, indi:46라인 근처 self.reset() 아래에
     
     self.reset()<br/>
     **self.tune = nTune(CP, self)** # 추가
     
-    3) lqr:47라인, indi:66라인 근처 update 함수블럭 첫 줄에 추가합니다.
+   #### lqr:47라인, indi:66라인 근처 update 함수블럭 첫 줄에 추가합니다.
     
     def update(self, ..........):<br/>
     &nbsp;&nbsp;&nbsp;&nbsp;**self.tune.check()** # 추가
 
-    4) steerRatio, steerActuatorDelay 추가
+   #### steerRatio, steerActuatorDelay 추가
 
     pathplanner.py 의 68라인 근처
 
