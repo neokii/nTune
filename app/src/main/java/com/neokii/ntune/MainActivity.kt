@@ -167,14 +167,8 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
         return (dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)).toInt()
     }
 
-    private var lastLog: String? = null
     private fun addLog(text: String)
     {
-        //if(lastLog != null && lastLog.equals(text) && !lastLog!!.matches(Regex(""".+@.+:.+\$\s.+""")))
-        //    return
-
-        lastLog = text
-
         if(logView.text.length > 1024*1024)
             logView.text = ""
 

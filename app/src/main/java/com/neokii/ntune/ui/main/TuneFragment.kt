@@ -149,7 +149,7 @@ class TuneFragment : Fragment() {
     private fun getStep(): Float
     {
         try {
-            val index = SettingUtil.getInt(activity, getSaveKey(), 2)
+            val index = SettingUtil.getInt(activity, getSaveKey(), 3)
             val v = arrayOf(0.01f, 0.1f, 0.5f, 1.0f, 5.0f, 10.0f)
             return itemInfo.step*v[index]
         }
