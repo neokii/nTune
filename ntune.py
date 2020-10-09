@@ -132,10 +132,10 @@ class nTune():
   def checkValidCommon(self):
     updated = False
 
-    if self.checkValue("steerRatio", 5.0, 25.0, 12.5):
+    if self.checkValue("steerRatio", 5.0, 25.0, 13.0):
       updated = True
 
-    if self.checkValue("steerActuatorDelay", 0.1, 0.8, 0.2):
+    if self.checkValue("steerActuatorDelay", 0.1, 0.8, 0.25):
       updated = True
 
     return updated
@@ -146,16 +146,16 @@ class nTune():
     if self.checkValue("scale", 500.0, 5000.0, 1500.0):
       updated = True
 
-    if self.checkValue("ki", 0.0, 0.2, 0.025):
+    if self.checkValue("ki", 0.0, 0.2, 0.015):
       updated = True
 
-    if self.checkValue("dcGain", 0.0020, 0.0040, 0.00225):
+    if self.checkValue("dcGain", 0.0020, 0.0040, 0.00250):
       updated = True
 
     if self.checkValue("steerLimitTimer", 0.5, 3.0, 2.0):
       updated = True
 
-    if self.checkValue("steerMax", 0.5, 3.0, 1.8):
+    if self.checkValue("steerMax", 0.5, 3.0, 1.3):
       updated = True
 
     return updated
@@ -223,7 +223,7 @@ class nTune():
         if self.CP.lateralTuning.which() == 'lqr' and self.lqr is not None:
           self.config["scale"] = round(self.CP.lateralTuning.lqr.scale, 2)
           self.config["ki"] = round(self.CP.lateralTuning.lqr.ki, 3)
-          self.config["dcGain"] = round(self.CP.lateralTuning.lqr.dcGain, 5)
+          self.config["dcGain"] = round(self.CP.lateralTuning.lqr.dcGain, 6)
           self.config["steerLimitTimer"] = round(self.CP.steerLimitTimer, 2)
           self.config["steerMax"] = round(self.CP.steerMaxV[0], 2)
 

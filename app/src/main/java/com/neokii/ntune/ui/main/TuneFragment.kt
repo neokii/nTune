@@ -113,7 +113,7 @@ class TuneFragment : Fragment() {
         }
 
         activity?.let {
-            val items = arrayOf("x0.1", "x0.5", "x1", "x5", "x10")
+            val items = arrayOf("x0.01", "x0.1", "x0.5", "x1", "x5", "x10")
 
             spinnerStepScale.adapter =
                 ArrayAdapter(it.applicationContext, R.layout.spinner_text,
@@ -132,22 +132,25 @@ class TuneFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    SettingUtil.setInt(activity, "item_step_scale_" + itemInfo.key, position)
+                    SettingUtil.setInt(activity, getSaveKey(), position)
                     updateStepScale()
                 }
             }
 
-            spinnerStepScale.setSelection(SettingUtil.getInt(activity, "item_step_scale_" + itemInfo.key, 2))
+            spinnerStepScale.setSelection(SettingUtil.getInt(activity, getSaveKey(), 3))
         }
+    }
 
-
+    private fun getSaveKey(): String
+    {
+        return "item_step_scale_v2_${itemInfo.key}"
     }
 
     private fun getStep(): Float
     {
         try {
-            val index = SettingUtil.getInt(activity, "item_step_scale_" + itemInfo.key, 2)
-            val v = arrayOf(0.1f, 0.5f, 1.0f, 5.0f, 10.0f)
+            val index = SettingUtil.getInt(activity, getSaveKey(), 2)
+            val v = arrayOf(0.01f, 0.1f, 0.5f, 1.0f, 5.0f, 10.0f)
             return itemInfo.step*v[index]
         }
         catch (e: Exception){}

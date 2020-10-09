@@ -38,10 +38,15 @@ class SshShell(
             ),
             "git reset --hard" to CmdItem(false, arrayListOf("cd /data/openpilot && git reset --hard")),
             "git pull" to CmdItem(false, arrayListOf("cd /data/openpilot && git pull")),
+
+            "android settings" to CmdItem(false, arrayListOf("am start -a android.settings.SETTINGS")),
+            "kill android settings" to CmdItem(false, arrayListOf("pkill -f com.android.settings")),
+
             "flash panda" to CmdItem(
                 true,
                 arrayListOf("cd /data/openpilot/panda/board && pkill -f boardd && make")
             ),
+
             "reboot" to CmdItem(true, arrayListOf("reboot"))
         )
     }
@@ -88,10 +93,11 @@ class SshShell(
 
             try
             {
-                var line: String
                 while(!isInterrupted)
                 {
-                    while (bufferedReader.readLine().also { line = it } != null)
+                    val line = bufferedReader.readLine() ?: break
+
+                    if(line.isNotEmpty())
                     {
                         handler.post {
                             listener.onRead(line.replace(Regex("\\e\\[[\\d;]*[^\\d;]"),""))
@@ -148,7 +154,7 @@ class SshShell(
     fun send(cmd: String)
     {
         queue.add(cmd)
-        //queue.add("")
+        queue.add("")
     }
 
 

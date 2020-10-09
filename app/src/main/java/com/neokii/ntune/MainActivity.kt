@@ -170,8 +170,8 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
     private var lastLog: String? = null
     private fun addLog(text: String)
     {
-        if(lastLog != null && lastLog.equals(text) && !lastLog!!.matches(Regex(""".+@.+:.+\$\s.+""")))
-            return
+        //if(lastLog != null && lastLog.equals(text) && !lastLog!!.matches(Regex(""".+@.+:.+\$\s.+""")))
+        //    return
 
         lastLog = text
 
@@ -236,6 +236,8 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             shell = SshShell(host, 8022, this)
             shell?.start()
         }
+
+        addLog("\n")
 
         for (cmd in cmds)
             shell?.send(cmd)

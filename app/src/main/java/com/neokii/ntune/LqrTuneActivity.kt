@@ -21,7 +21,7 @@ class LqrTuneActivity: BaseTuneActivity() {
             //it.add(TuneItemInfo("l_1", json.getDouble("l_1").toFloat(), 0.1f, 0.5f, 0.01f, 3))
             //it.add(TuneItemInfo("l_2", json.getDouble("l_2").toFloat(), 0.1f, 0.5f, 0.01f, 3))
 
-            it.add(TuneItemInfo("dcGain", json.getDouble("dcGain").toFloat(), 0.0020f, 0.0040f, 0.0001f, 5))
+            it.add(TuneItemInfo("dcGain", json.getDouble("dcGain").toFloat(), 0.0020f, 0.0040f, 0.0001f, 6))
 
             it.add(TuneItemInfo("steerLimitTimer", json.getDouble("steerLimitTimer").toFloat(),
                 0.5f, 3.0f, 0.05f, 3))
