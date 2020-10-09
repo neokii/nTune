@@ -37,7 +37,7 @@ https://github.com/neokii/nTune/releases
     **self.tune = nTune(CP)** # 추가
 
      102라인 근처  VM.update_params(...) 호출되는 바로 아래에<br/>
-    **VM.sr = self.tune.get('steerRatio')** # 추가
+    **VM.sR = self.tune.get('steerRatio')** # 추가
 
     118라인 근처 calc_states_after_delay 함수 호출부분 마지막 인자를<br/>
     CP.steerActuatorDelay -> **self.tune.get('steerActuatorDelay')** 로 수정
