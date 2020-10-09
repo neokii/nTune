@@ -34,21 +34,19 @@ class EonScanner() {
                 val read = bufferedReader.readLine()
 
                 socket.close()
-                es.shutdownNow()
 
                 if(read.startsWith("SSH"))
                 {
+                    es.shutdownNow()
                     address = ip
                     listener?.let {
                         Handler(Looper.getMainLooper()).post {
                             listener.onResult(ip)
                         }
                     }
-
-                    ip
                 }
 
-                null
+                address
 
             } catch (ex: Exception) {
                 null
