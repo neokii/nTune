@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">nTune</string>
 
-    <string name="btn_scan">"Scan"</string>
+    <string name="btn_scan">"Find EON"</string>
 
     <string name="format_scan_success">"Found EON: %s"</string>
     <string name="scan_fail">"Couldn't find EON."</string>
 
-    <string name="btn_connect_common">"Common"</string>
+    <string name="btn_connect_general">"General"</string>
     <string name="btn_connect_lqr">"LQR"</string>
     <string name="btn_connect_indi">"INDI"</string>
 
@@ -21,4 +21,20 @@
 You must be connected to the panda at least once."</string>
 
     <string name="confirm">"Are you sure?"</string>
+
+    <string name="shell_create_prebuilt">"Create prebuilt"</string>
+    <string name="shell_remove_prebuilt">"Remove prebuilt"</string>
+
+    <string name="shell_git_reset_hard">"Git Reset"</string>
+    <string name="shell_git_pull">"Git Pull"</string>
+
+    <string name="shell_launch_android_settings">"System Settings"</string>
+    <string name="shell_kill_android_settings">"Close System Settings"</string>
+
+    <string name="shell_reset_calibration">"Reset Calibration"</string>
+    <string name="shell_reset_liveparams">"Reset LiveParameters"</string>
+
+    <string name="shell_flash_panda">"Flash Panda firmware"</string>
+    <string name="shell_reboot">"Reboot"</string>
+
 </resources>

@@ -53,12 +53,12 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnCommon"
+                android:id="@+id/btnGeneral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="10dp"
-                android:text="@string/btn_connect_common" />
+                android:text="@string/btn_connect_general" />
 
             <Button
                 android:id="@+id/btnConnectLqr"
@@ -90,7 +90,8 @@
             <TextView
                 android:id="@+id/logView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="13sp"/>
 
         </ScrollView>
 

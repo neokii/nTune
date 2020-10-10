@@ -21,7 +21,7 @@ class SshShell(
 ) : Thread()
 {
     data class CmdItem(
-        val title: String,
+        val resId: Int,
         val confirm: Boolean,
         val cmds: ArrayList<String>
     )
@@ -29,16 +29,16 @@ class SshShell(
     companion object {
         val cmdList = arrayListOf(
 
-            CmdItem("touch prebuilt", false, arrayListOf("touch /data/openpilot/prebuilt")),
-            CmdItem("rm prebuilt", false, arrayListOf("rm /data/openpilot/prebuilt")),
-            CmdItem("git reset --hard", true, arrayListOf("cd /data/openpilot && git reset --hard")),
-            CmdItem("git pull", false, arrayListOf("cd /data/openpilot && git pull")),
-            CmdItem("android settings", false, arrayListOf("am start -a android.settings.SETTINGS")),
-            CmdItem("kill android settings", false, arrayListOf("pkill -f com.android.settings")),
-            CmdItem("Reset Calibration", true, arrayListOf("rm /data/params/d/CalibrationParams")),
-            CmdItem("Reset LiveParameters", true, arrayListOf("rm /data/params/d/LiveParameters")),
-            CmdItem("flash panda", true, arrayListOf("cd /data/openpilot/panda/board && pkill -f boardd && make")),
-            CmdItem("reboot", true, arrayListOf("reboot"))
+            CmdItem(R.string.shell_create_prebuilt, false, arrayListOf("touch /data/openpilot/prebuilt")),
+            CmdItem(R.string.shell_remove_prebuilt, false, arrayListOf("rm /data/openpilot/prebuilt")),
+            CmdItem(R.string.shell_git_reset_hard, true, arrayListOf("cd /data/openpilot && git reset --hard")),
+            CmdItem(R.string.shell_git_pull, false, arrayListOf("cd /data/openpilot && git pull")),
+            CmdItem(R.string.shell_launch_android_settings, false, arrayListOf("am start -a android.settings.SETTINGS")),
+            CmdItem(R.string.shell_kill_android_settings, false, arrayListOf("pkill -f com.android.settings")),
+            CmdItem(R.string.shell_reset_calibration, true, arrayListOf("rm /data/params/d/CalibrationParams")),
+            CmdItem(R.string.shell_reset_liveparams, true, arrayListOf("rm /data/params/d/LiveParameters")),
+            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board && pkill -f boardd && make")),
+            CmdItem(R.string.shell_reboot, true, arrayListOf("reboot"))
 
         )
     }

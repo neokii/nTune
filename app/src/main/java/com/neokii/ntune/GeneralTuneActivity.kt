@@ -2,7 +2,7 @@ package com.neokii.ntune
 
 import org.json.JSONObject
 
-class CommonTuneActivity: BaseTuneActivity() {
+class GeneralTuneActivity: BaseTuneActivity() {
 
     override fun getRemoteConfFile(): String {
         return "/data/ntune/common.json"

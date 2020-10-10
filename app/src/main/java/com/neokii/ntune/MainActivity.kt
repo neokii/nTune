@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             handleConnect(IndiTuneActivity::class.java)
         }
 
-        btnCommon.setOnClickListener {
-            handleConnect(CommonTuneActivity::class.java)
+        btnGeneral.setOnClickListener {
+            handleConnect(GeneralTuneActivity::class.java)
         }
 
         btnScan.setOnClickListener {
@@ -221,7 +221,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
             val cmd = SshShell.cmdList[position]
-            holder.binding.btnCmd.text = cmd.title
+            holder.binding.btnCmd.text = getString(cmd.resId)
         }
     }
 

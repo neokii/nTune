@@ -2,12 +2,12 @@
 
     <string name="app_name">nTune</string>
 
-    <string name="btn_scan">"Scan"</string>
+    <string name="btn_scan">"이온 찾기"</string>
 
     <string name="format_scan_success">"이온을 찾았습니다: %s"</string>
     <string name="scan_fail">"이온을 찾지 못하였습니다."</string>
 
-    <string name="btn_connect_common">"Common"</string>
+    <string name="btn_connect_general">"일반"</string>
     <string name="btn_connect_lqr">"LQR"</string>
     <string name="btn_connect_indi">"INDI"</string>
 
@@ -23,5 +23,21 @@
 최소 한번 판다와 연결이 되어야 합니다."</string>
 
     <string name="confirm">"진행하시겠습니까?"</string>
+
+
+    <string name="shell_create_prebuilt">"prebuilt 생성"</string>
+    <string name="shell_remove_prebuilt">"prebuilt 삭제"</string>
+
+    <string name="shell_git_reset_hard">"Git Reset"</string>
+    <string name="shell_git_pull">"Git Pull"</string>
+
+    <string name="shell_launch_android_settings">"시스템 설정"</string>
+    <string name="shell_kill_android_settings">"시스템 설정 닫기"</string>
+
+    <string name="shell_reset_calibration">"캘리브레이션 재설정"</string>
+    <string name="shell_reset_liveparams">"라이브 파라미터 재설정"</string>
+
+    <string name="shell_flash_panda">"판다 플래싱"</string>
+    <string name="shell_reboot">"재부팅"</string>
 
 </resources>
