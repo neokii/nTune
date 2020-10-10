@@ -21,33 +21,23 @@ class SshShell(
 ) : Thread()
 {
     data class CmdItem(
+        val title: String,
         val confirm: Boolean,
         val cmds: ArrayList<String>
     )
 
     companion object {
-        val cmdList = mapOf(
+        val cmdList = arrayListOf(
 
-            "touch prebuilt" to CmdItem(
-                false,
-                arrayListOf("touch /data/openpilot/prebuilt")
-            ),
-            "rm prebuilt" to CmdItem(
-                false,
-                arrayListOf("rm /data/openpilot/prebuilt")
-            ),
-            "git reset --hard" to CmdItem(false, arrayListOf("cd /data/openpilot && git reset --hard")),
-            "git pull" to CmdItem(false, arrayListOf("cd /data/openpilot && git pull")),
+            CmdItem("touch prebuilt", false, arrayListOf("touch /data/openpilot/prebuilt")),
+            CmdItem("rm prebuilt", false, arrayListOf("rm /data/openpilot/prebuilt")),
+            CmdItem("git reset --hard", true, arrayListOf("cd /data/openpilot && git reset --hard")),
+            CmdItem("git pull", false, arrayListOf("cd /data/openpilot && git pull")),
+            CmdItem("android settings", false, arrayListOf("am start -a android.settings.SETTINGS")),
+            CmdItem("kill android settings", false, arrayListOf("pkill -f com.android.settings")),
+            CmdItem("flash panda", true, arrayListOf("cd /data/openpilot/panda/board && pkill -f boardd && make")),
+            CmdItem("reboot", true, arrayListOf("reboot"))
 
-            "android settings" to CmdItem(false, arrayListOf("am start -a android.settings.SETTINGS")),
-            "kill android settings" to CmdItem(false, arrayListOf("pkill -f com.android.settings")),
-
-            "flash panda" to CmdItem(
-                true,
-                arrayListOf("cd /data/openpilot/panda/board && pkill -f boardd && make")
-            ),
-
-            "reboot" to CmdItem(true, arrayListOf("reboot"))
         )
     }
 

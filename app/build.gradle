@@ -6,11 +6,13 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+    buildFeatures.viewBinding = true
+
     defaultConfig {
         applicationId "com.neokii.ntune"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1171
+        versionCode 1172
         versionName "1.1.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

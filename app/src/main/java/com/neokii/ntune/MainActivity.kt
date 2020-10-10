@@ -6,17 +6,16 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.GridLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.view.setMargins
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.neokii.ntune.databinding.CmdButtonBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -32,9 +31,10 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
 
         setContentView(R.layout.activity_main)
 
-        val lastIp = SettingUtil.getString(applicationContext, "last_host", "")
-        if(lastIp.isNotEmpty())
-            editHost.setText(lastIp)
+        SettingUtil.getString(applicationContext, "last_host", "").also {
+            if(it.isNotEmpty())
+                editHost.setText(it)
+        }
 
         btnConnectLqr.setOnClickListener {
             handleConnect(LqrTuneActivity::class.java)
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             handleScan()
         }
 
-        buildButtons(layoutButtons)
+        buildButtons()
         updateControls(false)
 
         handleScan()
@@ -178,46 +178,57 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
         }
     }
 
-    private fun buildButtons(viewGroup: ViewGroup)
+    inner class ListAdapter: RecyclerView.Adapter<ListAdapter.ViewHolder>()
     {
-        for(cmd in SshShell.cmdList)
+        inner class ViewHolder(val binding: CmdButtonBinding) : RecyclerView.ViewHolder(binding.root)
         {
-            val btn = Button(this)
-            btn.text = cmd.key
+            init {
+                binding.btnCmd.setOnClickListener {
+                    val cmd = SshShell.cmdList[adapterPosition]
 
-            GridLayout.LayoutParams(
-                GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f),
-                GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f)
-            ).also {
-
-                it.setMargins(DP2PX(this, 8))
-                viewGroup.addView(btn, it)
-            }
-
-            btn.setOnClickListener{
-
-                val host = editHost.text.toString();
-                if(host.isNotEmpty())
-                {
-                    if(cmd.value.confirm)
+                    val host = editHost.text.toString();
+                    if(host.isNotEmpty())
                     {
-                        AlertDialog.Builder(this@MainActivity)
-                            .setMessage(R.string.confirm)
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .setPositiveButton(
-                                android.R.string.ok
-                            ) { _, _ ->
-                                SshShell.cmdList[cmd.key]?.let { shell(host, it.cmds) }
-                            }
-                            .show()
-                    }
-                    else
-                    {
-                        SshShell.cmdList[cmd.key]?.let { shell(host, it.cmds) }
+                        if(cmd.confirm)
+                        {
+                            AlertDialog.Builder(this@MainActivity)
+                                .setMessage(R.string.confirm)
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .setPositiveButton(
+                                    android.R.string.ok
+                                ) { _, _ ->
+                                    shell(host, cmd.cmds)
+                                }
+                                .show()
+                        }
+                        else
+                        {
+                            shell(host, cmd.cmds)
+                        }
                     }
                 }
             }
         }
+
+        override fun getItemCount(): Int {
+            return SshShell.cmdList.size
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            return ViewHolder(CmdButtonBinding.inflate(layoutInflater))
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+            val cmd = SshShell.cmdList[position]
+            holder.binding.btnCmd.text = cmd.title
+        }
+    }
+
+    private fun buildButtons()
+    {
+        listView.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+        listView.adapter = ListAdapter()
     }
 
     fun shell(host: String, cmds: ArrayList<String>)
@@ -231,7 +242,8 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             shell?.start()
         }
 
-        addLog("\n")
+        if(shell?.isConnected() == true)
+            addLog("\n")
 
         for (cmd in cmds)
             shell?.send(cmd)
