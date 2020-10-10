@@ -35,6 +35,8 @@ class SshShell(
             CmdItem("git pull", false, arrayListOf("cd /data/openpilot && git pull")),
             CmdItem("android settings", false, arrayListOf("am start -a android.settings.SETTINGS")),
             CmdItem("kill android settings", false, arrayListOf("pkill -f com.android.settings")),
+            CmdItem("Reset Calibration", true, arrayListOf("rm /data/params/d/CalibrationParams")),
+            CmdItem("Reset LiveParameters", true, arrayListOf("rm /data/params/d/LiveParameters")),
             CmdItem("flash panda", true, arrayListOf("cd /data/openpilot/panda/board && pkill -f boardd && make")),
             CmdItem("reboot", true, arrayListOf("reboot"))
 
