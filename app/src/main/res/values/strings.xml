@@ -22,6 +22,8 @@ You must be connected to the panda at least once."</string>
 
     <string name="confirm">"Are you sure?"</string>
 
+    <string name="tune_camera_offset_desc">"Increase to move the vehicle to the left, decrease to move it to the right."</string>
+
     <string name="shell_create_prebuilt">"Create prebuilt"</string>
     <string name="shell_remove_prebuilt">"Remove prebuilt"</string>
 

@@ -85,6 +85,10 @@ class TuneFragment : Fragment() {
     private fun initControls()
     {
         textKey.text = itemInfo.key
+
+        if(itemInfo.descResId > 0)
+            textDesc.setText(itemInfo.descResId)
+
         textMin.text = itemInfo.toString(itemInfo.min)
         textMax.text = itemInfo.toString(itemInfo.max)
 

@@ -6,7 +6,7 @@ import org.json.JSONObject
 import java.lang.Exception
 
 data class TuneItemInfo(val key: String, val defValue: Float, val min: Float,
-                        val max: Float, val step: Float, val precision: Int) : Parcelable
+                        val max: Float, val step: Float, val precision: Int, val descResId: Int = 0) : Parcelable
 {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -14,6 +14,7 @@ data class TuneItemInfo(val key: String, val defValue: Float, val min: Float,
         parcel.readFloat(),
         parcel.readFloat(),
         parcel.readFloat(),
+        parcel.readInt(),
         parcel.readInt()
     )
 
@@ -24,6 +25,7 @@ data class TuneItemInfo(val key: String, val defValue: Float, val min: Float,
         parcel.writeFloat(max)
         parcel.writeFloat(step)
         parcel.writeInt(precision)
+        parcel.writeInt(descResId)
     }
 
     override fun describeContents(): Int {
@@ -39,41 +41,6 @@ data class TuneItemInfo(val key: String, val defValue: Float, val min: Float,
         override fun newArray(size: Int): Array<TuneItemInfo?> {
             return arrayOfNulls(size)
         }
-
-        fun fromJson(jsonObject: JSONObject) : TuneItemInfo?
-        {
-            try
-            {
-                return TuneItemInfo(jsonObject.getString("key"),
-                    jsonObject.getDouble("defValue").toFloat(),
-                    jsonObject.getDouble("min").toFloat(),
-                    jsonObject.getDouble("max").toFloat(),
-                    jsonObject.getDouble("step").toFloat(),
-                    jsonObject.getDouble("precision").toInt()
-                )
-            }
-            catch (e: Exception){}
-            return null
-        }
-    }
-
-    fun toJsonString() : String?
-    {
-        try
-        {
-            val json = JSONObject()
-
-            json.put("key", key)
-            json.put("defValue", defValue)
-            json.put("min", min)
-            json.put("max", max)
-            json.put("step", step)
-            json.put("precision", precision)
-
-            return json.toString()
-        }
-        catch (e: Exception){}
-        return null
     }
 
     fun toString(value: Float) : String

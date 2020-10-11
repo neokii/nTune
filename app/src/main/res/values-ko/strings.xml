@@ -22,6 +22,8 @@
     <string name="conf_load_failed">"이온에서 설정파일을 불러오지 못하였습니다.
 최소 한번 판다와 연결이 되어야 합니다."</string>
 
+    <string name="tune_camera_offset_desc">"차량을 왼쪽으로 이동하시려면 증가시키고, 반대의 경우 감소시키세요."</string>
+
     <string name="confirm">"진행하시겠습니까?"</string>
 
 

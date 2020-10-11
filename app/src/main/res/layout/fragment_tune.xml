@@ -71,6 +71,13 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="30sp"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/textDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"/>
 
