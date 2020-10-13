@@ -47,13 +47,18 @@ https://github.com/neokii/nTune/releases
     두 파일의 상단에 import 추가
     from selfdrive.ntune import ntune_get
 
-    controlsd.py 435라인 근처  CAMERA_OFFSET 을 아래와 같이 수정합니다.
+    버전마다 약간의 차이가 있을 수 있으니
+    cameraOffset = ntune_get("cameraOffset") 를 추가하고
+    CAMERA_OFFSET -> cameraOffset 으로 대체만 하시기 바랍니다.
+
+
+    * controlsd.py 435라인 근처  CAMERA_OFFSET 을 아래와 같이 수정합니다.
 
     cameraOffset = ntune_get("cameraOffset")
     l_lane_close = left_lane_visible and (self.sm['pathPlan'].lPoly[3] < (1.08 - cameraOffset))
     r_lane_close = right_lane_visible and (self.sm['pathPlan'].rPoly[3] > -(1.08 + cameraOffset))
 
-    lane_planner.py 의 90라인 근처
+    * lane_planner.py 의 90라인 근처
 
     cameraOffset = ntune_get("cameraOffset")
     self.l_poly[3] += cameraOffset
