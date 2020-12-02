@@ -35,6 +35,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ExceptionCaptureActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

@@ -12,7 +12,12 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager, pr
     FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return TuneFragment.newInstance(itemInfos[position], host, remoteConfFile)
+
+        val itemInfo = itemInfos[position]
+        if(itemInfo.step == 0.0f)
+            return TuneSwitchFragment.newInstance(itemInfos[position], host, remoteConfFile)
+        else
+            return TuneFragment.newInstance(itemInfos[position], host, remoteConfFile)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

@@ -6,16 +6,26 @@
     <string name="format_scan_success">"Found EON: %s"</string>
     <string name="scan_fail">"Couldn't find EON."</string>
 
+    <string name="btn_copy">"Copy"</string>
+    <string name="connected_exception_capture">"Connected !!"</string>
+
+    <string name="btn_connect_exception_capture">"Crash Log"</string>
     <string name="btn_connect_general">"General"</string>
     <string name="btn_connect_lqr">"LQR"</string>
     <string name="btn_connect_indi">"INDI"</string>
 
+    <string name="btn_git_account">"Git Account"</string>
+
     <string name="btn_clear_addresses">"Remove All"</string>
     <string name="confirm_clear_addresses">"Are you sure you want to remove all?"</string>
 
+    <string name="btn_enable">"Enable"</string>
     <string name="btn_reset">"Reset"</string>
     <string name="btn_decrease">"Decrease (-)"</string>
     <string name="btn_increase">"Increase (+)"</string>
+
+    <string name="general_use_live_sr">"Use the live steerRatio rather than a fixed value."</string>
+
 
     <string name="conf_load_failed">"The configuration file could not be loaded from EON.
 You must be connected to the panda at least once."</string>

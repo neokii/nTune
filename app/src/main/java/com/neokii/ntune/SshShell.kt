@@ -37,7 +37,7 @@ class SshShell(
             CmdItem(R.string.shell_kill_android_settings, false, arrayListOf("pkill -f com.android.settings")),
             CmdItem(R.string.shell_reset_calibration, true, arrayListOf("rm /data/params/d/CalibrationParams")),
             CmdItem(R.string.shell_reset_liveparams, true, arrayListOf("rm /data/params/d/LiveParameters")),
-            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board && pkill -f boardd && make")),
+            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board && pkill -f boardd || make clean && make")),
             CmdItem(R.string.shell_reboot, true, arrayListOf("reboot"))
 
         )

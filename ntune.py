@@ -126,10 +126,16 @@ class nTune():
   def checkValidCommon(self):
     updated = False
 
-    if self.checkValue("steerRatio", 5.0, 25.0, 13.5):
+    if self.checkValue("useLiveSteerRatio", 0., 1., 1.):
+      updated = True
+
+    if self.checkValue("steerRatio", 5.0, 25.0, 14.4):
       updated = True
 
     if self.checkValue("steerActuatorDelay", 0.1, 0.8, 0.25):
+      updated = True
+
+    if self.checkValue("steerRateCost", 0.1, 1.5, 0.6):
       updated = True
 
     if self.checkValue("cameraOffset", -1.0, 1.0, 0.06):
@@ -140,19 +146,16 @@ class nTune():
   def checkValidLQR(self):
     updated = False
 
-    if self.checkValue("scale", 500.0, 5000.0, 1500.0):
+    if self.checkValue("scale", 500.0, 5000.0, 2000.0):
       updated = True
 
     if self.checkValue("ki", 0.0, 0.2, 0.015):
       updated = True
 
-    if self.checkValue("dcGain", 0.0020, 0.0040, 0.00250):
+    if self.checkValue("dcGain", 0.002, 0.004, 0.0029):
       updated = True
 
-    if self.checkValue("steerLimitTimer", 0.5, 3.0, 2.0):
-      updated = True
-
-    if self.checkValue("steerMax", 0.5, 3.0, 1.3):
+    if self.checkValue("steerLimitTimer", 0.5, 3.0, 2.5):
       updated = True
 
     return updated
@@ -175,9 +178,6 @@ class nTune():
     if self.checkValue("steerLimitTimer", 0.5, 3.0, 0.8):
       updated = True
 
-    if self.checkValue("steerMax", 0.5, 3.0, 1.0):
-      updated = True
-
     return updated
 
   def updateLQR(self):
@@ -188,9 +188,6 @@ class nTune():
     self.lqr.dc_gain = float(self.config["dcGain"])
 
     self.lqr.sat_limit = float(self.config["steerLimitTimer"])
-
-    self.CP.steerMaxBP = [0.0]
-    self.CP.steerMaxV = [float(self.config["steerMax"])]
 
     self.lqr.x_hat = np.array([[0], [0]])
     self.lqr.reset()
@@ -204,9 +201,6 @@ class nTune():
     self.indi.alpha = 1. - DT_CTRL / (self.indi.RC + DT_CTRL)
 
     self.indi.sat_limit = float(self.config["steerLimitTimer"])
-
-    self.CP.steerMaxBP = [0.0]
-    self.CP.steerMaxV = [float(self.config["steerMax"])]
 
     self.indi.reset()
 
@@ -233,8 +227,10 @@ class nTune():
           self.config["steerMax"] = round(self.CP.steerMaxV[0], 2)
 
         else:
+          self.config["useLiveSteerRatio"] = 1.
           self.config["steerRatio"] = round(self.CP.steerRatio, 2)
           self.config["steerActuatorDelay"] = round(self.CP.steerActuatorDelay, 2)
+          self.config["steerRateCost"] = round(self.CP.steerRateCost, 2)
 
     except:
       pass
@@ -281,3 +277,6 @@ def ntune_get(key):
     v = ntune.config[key]
 
   return v
+
+def ntune_isEnabled(key):
+  return ntune_get(key) > 0.5

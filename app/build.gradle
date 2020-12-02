@@ -12,8 +12,8 @@ android {
         applicationId "com.neokii.ntune"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1180
-        versionName "1.1.8"
+        versionCode 1220
+        versionName "1.2.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

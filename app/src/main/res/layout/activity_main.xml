@@ -30,9 +30,10 @@
 
             <EditText
                 android:id="@+id/editHost"
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:textSize="14sp"
                 android:layout_margin="10dp" />
 
             <Button
@@ -40,8 +41,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:text="@string/btn_scan" />
+
+            <Button
+                android:id="@+id/btnExceptionCapture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:text="@string/btn_connect_exception_capture" />
 
         </LinearLayout>
 
@@ -57,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:text="@string/btn_connect_general" />
 
             <Button
@@ -65,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:text="@string/btn_connect_lqr" />
 
             <Button
@@ -73,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:text="@string/btn_connect_indi" />
 
         </LinearLayout>
@@ -103,6 +112,14 @@
             android:columnCount="2"
             android:alignmentMode="alignBounds"
             /-->
+
+        <Button
+            android:id="@+id/btnGitAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:text="@string/btn_git_account" />
 
     </LinearLayout>
 

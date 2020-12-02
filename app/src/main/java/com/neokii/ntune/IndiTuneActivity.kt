@@ -1,5 +1,6 @@
 package com.neokii.ntune
 
+import com.neokii.ntune.Feature.FEATURE_UNIVERSAL
 import org.json.JSONObject
 
 class IndiTuneActivity: BaseTuneActivity() {

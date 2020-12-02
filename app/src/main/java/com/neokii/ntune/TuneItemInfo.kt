@@ -2,8 +2,6 @@ package com.neokii.ntune
 
 import android.os.Parcel
 import android.os.Parcelable
-import org.json.JSONObject
-import java.lang.Exception
 
 data class TuneItemInfo(val key: String, val defValue: Float, val min: Float,
                         val max: Float, val step: Float, val precision: Int, val descResId: Int = 0) : Parcelable

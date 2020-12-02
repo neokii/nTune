@@ -7,17 +7,25 @@
     <string name="format_scan_success">"이온을 찾았습니다: %s"</string>
     <string name="scan_fail">"이온을 찾지 못하였습니다."</string>
 
+    <string name="btn_copy">"복 사"</string>
+    <string name="connected_exception_capture">"연결되었습니다 !!"</string>
+
+    <string name="btn_connect_exception_capture">"예외로그"</string>
     <string name="btn_connect_general">"일반"</string>
     <string name="btn_connect_lqr">"LQR"</string>
     <string name="btn_connect_indi">"INDI"</string>
+    <string name="btn_git_account">"Git 계정"</string>
 
     <string name="btn_clear_addresses">"모두삭제"</string>
 
     <string name="confirm_clear_addresses">"모두 삭제하시겠습니까?"</string>
 
+    <string name="btn_enable">"사용"</string>
     <string name="btn_reset">"재설정"</string>
     <string name="btn_decrease">"내리기 (-)"</string>
     <string name="btn_increase">"올리기 (+)"</string>
+
+    <string name="general_use_live_sr">"고정값이 아닌 학습 steerRatio를 사용합니다."</string>
 
     <string name="conf_load_failed">"이온에서 설정파일을 불러오지 못하였습니다.
 최소 한번 판다와 연결이 되어야 합니다."</string>

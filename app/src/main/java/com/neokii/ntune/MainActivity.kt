@@ -3,6 +3,7 @@ package com.neokii.ntune
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.DisplayMetrics
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.neokii.ntune.databinding.CmdButtonBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.concurrent.fixedRateTimer
 
 
 class MainActivity : AppCompatActivity(), SshShell.OnSshListener
@@ -28,6 +31,21 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(true)
+            //actionBar.setDisplayHomeAsUpEnabled(true)
+            try {
+                val packageInfo = packageManager.getPackageInfo(packageName, 0)
+                actionBar.title = getString(R.string.app_name) + " " + packageInfo.versionName
+
+                val universal = if (Feature.FEATURE_UNIVERSAL) "Universal" else "HKG Only"
+
+                actionBar.title = "${getString(R.string.app_name)} ${packageInfo.versionName} $universal"
+            } catch (e: java.lang.Exception) {
+            }
+        }
 
         setContentView(R.layout.activity_main)
 
@@ -48,9 +66,26 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             handleConnect(GeneralTuneActivity::class.java)
         }
 
+        btnExceptionCapture.setOnClickListener {
+
+            val host = editHost.text.toString();
+            if(host.isNotEmpty())
+            {
+                val intent = Intent(this, ExceptionCaptureActivity::class.java)
+                intent.putExtra("host", host)
+                startActivity(intent)
+            }
+        }
+
         btnScan.setOnClickListener {
             handleScan()
         }
+
+        btnGitAccount.setOnClickListener {
+            handleGitAccount()
+        }
+
+        btnGitAccount.visibility = View.GONE
 
         buildButtons()
         updateControls(false)
@@ -159,6 +194,12 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
                 }
             }
         })
+    }
+
+    private fun handleGitAccount()
+    {
+        val f = GitAccountDialog()
+        f.show(supportFragmentManager, null)
     }
 
     fun DP2PX(context: Context, dp: Int): Int {
