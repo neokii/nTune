@@ -1,4 +1,4 @@
-https://github.com/neokii/nTune/releases
+https://github.com/neokii/nTune/tree/master/release
 
 1.1.8 부터 cameraOffset이 추가되어 앱(apk), ntune.py 둘다 업데이트해야 합니다.
 
