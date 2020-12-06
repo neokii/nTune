@@ -87,7 +87,7 @@ class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
         }
         else
         {
-            matched = res.startsWith("Traceback (")
+            matched = res.contains("Traceback (")
 
             if(matched)
                 addLog(res)

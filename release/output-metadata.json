@@ -11,10 +11,10 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 1220,
-      "versionName": "1.2.2",
+      "versionCode": 1230,
+      "versionName": "1.2.3",
       "enabled": true,
-      "outputFile": "nTune-1.2.2.apk"
+      "outputFile": "nTune-1.2.3.apk"
     }
   ]
 }
