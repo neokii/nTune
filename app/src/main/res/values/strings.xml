@@ -46,6 +46,10 @@ You must be connected to the panda at least once."</string>
     <string name="shell_reset_calibration">"Reset Calibration"</string>
     <string name="shell_reset_liveparams">"Reset LiveParameters"</string>
 
+    <string name="shell_remove_readdata">"Remove reladdata"</string>
+    <string name="shell_remove_videos">"Remove videos"</string>
+
+
     <string name="shell_flash_panda">"Flash Panda firmware"</string>
     <string name="shell_reboot">"Reboot"</string>
 

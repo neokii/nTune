@@ -47,6 +47,9 @@
     <string name="shell_reset_calibration">"캘리브레이션 재설정"</string>
     <string name="shell_reset_liveparams">"라이브 파라미터 재설정"</string>
 
+    <string name="shell_remove_readdata">"reladdata 삭제"</string>
+    <string name="shell_remove_videos">"videos 삭제"</string>
+
     <string name="shell_flash_panda">"판다 플래싱"</string>
     <string name="shell_reboot">"재부팅"</string>
 
