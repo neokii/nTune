@@ -24,7 +24,6 @@ import kotlin.concurrent.fixedRateTimer
 
 class MainActivity : AppCompatActivity(), SshShell.OnSshListener
 {
-
     var session: SshSession? = null
     var shell: SshShell? = null
 
@@ -58,9 +57,9 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             handleConnect(LqrTuneActivity::class.java)
         }
 
-        btnConnectIndi.setOnClickListener {
+        /*btnConnectIndi.setOnClickListener {
             handleConnect(IndiTuneActivity::class.java)
-        }
+        }*/
 
         btnGeneral.setOnClickListener {
             handleConnect(GeneralTuneActivity::class.java)
@@ -106,7 +105,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
         if(host.isNotEmpty())
         {
             btnConnectLqr.isEnabled = false
-            btnConnectIndi.isEnabled = false
+            //btnConnectIndi.isEnabled = false
 
             val imm: InputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -117,7 +116,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
                 override fun onConnect() {
 
                     btnConnectLqr.isEnabled = true
-                    btnConnectIndi.isEnabled = true
+                    //btnConnectIndi.isEnabled = true
 
                     SettingUtil.setString(applicationContext, "last_host", host)
 
@@ -130,7 +129,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
                 override fun onFail(e: Exception) {
 
                     btnConnectLqr.isEnabled = true
-                    btnConnectIndi.isEnabled = true
+                    //btnConnectIndi.isEnabled = true
                     Snackbar.make(
                         findViewById(android.R.id.content),
                         e.localizedMessage,

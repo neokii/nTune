@@ -53,4 +53,6 @@ You must be connected to the panda at least once."</string>
     <string name="shell_flash_panda">"Flash Panda firmware"</string>
     <string name="shell_reboot">"Reboot"</string>
 
+    <string name="shell_launch_navdy_settings">"Navdy Settings"</string>
+
 </resources>

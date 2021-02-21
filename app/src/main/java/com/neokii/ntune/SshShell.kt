@@ -40,7 +40,8 @@ class SshShell(
             CmdItem(R.string.shell_remove_realdata, true, arrayListOf("rm -rf /sdcard/realdata")),
             CmdItem(R.string.shell_remove_videos, true, arrayListOf("rm -rf /sdcard/videos")),
             CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board && pkill -f boardd || make clean && make")),
-            CmdItem(R.string.shell_reboot, true, arrayListOf("reboot"))
+            CmdItem(R.string.shell_reboot, true, arrayListOf("reboot")),
+            CmdItem(R.string.shell_launch_navdy_settings, false, arrayListOf("am start -n com.neokii.openpilot/.MainActivity"))
 
         )
     }

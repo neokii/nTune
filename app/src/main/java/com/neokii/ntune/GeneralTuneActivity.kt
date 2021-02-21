@@ -28,7 +28,7 @@ class GeneralTuneActivity: BaseTuneActivity() {
         }
 
         list.add(TuneItemInfo("steerActuatorDelay", json.getDouble("steerActuatorDelay").toFloat(),
-            0.1f, 0.8f, 0.05f, 3))
+            0.0f, 0.8f, 0.05f, 3))
 
         list.add(TuneItemInfo("cameraOffset", json.getDouble("cameraOffset").toFloat(),
             -1.0f, 1.0f, 0.01f, 2, R.string.tune_camera_offset_desc))
