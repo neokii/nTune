@@ -9,6 +9,8 @@
     <string name="btn_copy">"Copy"</string>
     <string name="connected_exception_capture">"Connected !!"</string>
 
+    <string name="optional">"Optional"</string>
+
     <string name="btn_connect_exception_capture">"Crash Log"</string>
     <string name="btn_connect_general">"General"</string>
     <string name="btn_connect_lqr">"LQR"</string>
@@ -58,8 +60,8 @@ You must be connected to the panda at least once."</string>
 
 
     <string name="btn_ssh_key">"SSH Key"</string>
-    <string name="btn_ssh_key_select_private_file">"Select private file"</string>
-    <string name="btn_ssh_key_select_public_file">"Select public file"</string>
+    <string name="btn_ssh_key_select_private_file">"Private file"</string>
+    <string name="btn_ssh_key_select_public_file">"Public file(optional)"</string>
     <string name="btn_ssh_key_clear">"Clear"</string>
 
     <string name="ssh_password">"Password"</string>

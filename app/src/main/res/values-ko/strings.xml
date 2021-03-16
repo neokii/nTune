@@ -7,6 +7,8 @@
     <string name="format_scan_success">"이온을 찾았습니다: %s"</string>
     <string name="scan_fail">"이온을 찾지 못하였습니다."</string>
 
+    <string name="optional">"선택사항"</string>
+
     <string name="btn_copy">"복 사"</string>
     <string name="connected_exception_capture">"연결되었습니다 !!"</string>
 
@@ -56,8 +58,8 @@
     <string name="shell_launch_navdy_settings">"Navdy 설정"</string>
 
     <string name="btn_ssh_key">"SSH 키"</string>
-    <string name="btn_ssh_key_select_private_file">"개인키 파일"</string>
-    <string name="btn_ssh_key_select_public_file">"공개키 파일"</string>
+    <string name="btn_ssh_key_select_private_file">"개인키"</string>
+    <string name="btn_ssh_key_select_public_file">"공개키(선택사항)"</string>
     <string name="btn_ssh_key_clear">"모두 삭제"</string>
 
     <string name="ssh_password">"키 암호"</string>

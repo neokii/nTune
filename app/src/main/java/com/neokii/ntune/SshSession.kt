@@ -52,12 +52,17 @@ class SshSession(val host: String, val port: Int) {
     init
     {
         var privateKey = SettingUtil.getString(MyApp.getContext(), SshKeySettingActivity.PREF_PRIVATE_KEY, "")
-        if(privateKey.isEmpty())
-            privateKey = SshSession.privateKey
+        var publicKey = ""
 
-        var publicKey = SettingUtil.getString(MyApp.getContext(), SshKeySettingActivity.PREF_PUBLIC_KEY, "")
-        if(publicKey.isEmpty())
+        if(privateKey.isEmpty())
+        {
+            privateKey = SshSession.privateKey
             publicKey = SshSession.publicKey
+        }
+        else
+        {
+            publicKey = SettingUtil.getString(MyApp.getContext(), SshKeySettingActivity.PREF_PUBLIC_KEY, "")
+        }
 
         var passphrase = SettingUtil.getString(MyApp.getContext(), SshKeySettingActivity.PREF_PASSWORD_KEY, "")
         if(passphrase.isEmpty())
