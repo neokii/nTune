@@ -6,7 +6,6 @@ import com.jcraft.jsch.*
 import java.io.*
 import java.util.*
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
 
 class SshSession(val host: String, val port: Int) {
@@ -52,11 +51,23 @@ class SshSession(val host: String, val port: Int) {
 
     init
     {
+        var privateKey = SettingUtil.getString(MyApp.getContext(), SshKeySettingActivity.PREF_PRIVATE_KEY, "")
+        if(privateKey.isEmpty())
+            privateKey = SshSession.privateKey
+
+        var publicKey = SettingUtil.getString(MyApp.getContext(), SshKeySettingActivity.PREF_PUBLIC_KEY, "")
+        if(publicKey.isEmpty())
+            publicKey = SshSession.publicKey
+
+        var passphrase = SettingUtil.getString(MyApp.getContext(), SshKeySettingActivity.PREF_PASSWORD_KEY, "")
+        if(passphrase.isEmpty())
+            passphrase = "passphrase"
+
         jsch.addIdentity(
             "id_rsa",
             privateKey.toByteArray(),
             publicKey.toByteArray(),
-            "passphrase".toByteArray()
+            passphrase.toByteArray()
         )
     }
 

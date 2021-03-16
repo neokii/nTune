@@ -55,4 +55,15 @@
 
     <string name="shell_launch_navdy_settings">"Navdy 설정"</string>
 
+    <string name="btn_ssh_key">"SSH 키"</string>
+    <string name="btn_ssh_key_select_private_file">"개인키 파일"</string>
+    <string name="btn_ssh_key_select_public_file">"공개키 파일"</string>
+    <string name="btn_ssh_key_clear">"모두 삭제"</string>
+
+    <string name="ssh_password">"키 암호"</string>
+    <string name="ssh_private_key">"개인키"</string>
+    <string name="ssh_public_key">"공개키"</string>
+
+    <string name="confirm_clear_ssh_key">"삭제하시겠습니까?"</string>
+
 </resources>

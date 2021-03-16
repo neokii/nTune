@@ -55,4 +55,17 @@ You must be connected to the panda at least once."</string>
 
     <string name="shell_launch_navdy_settings">"Navdy Settings"</string>
 
+
+
+    <string name="btn_ssh_key">"SSH Key"</string>
+    <string name="btn_ssh_key_select_private_file">"Select private file"</string>
+    <string name="btn_ssh_key_select_public_file">"Select public file"</string>
+    <string name="btn_ssh_key_clear">"Clear"</string>
+
+    <string name="ssh_password">"Password"</string>
+    <string name="ssh_private_key">"Private key"</string>
+    <string name="ssh_public_key">"Public key"</string>
+
+    <string name="confirm_clear_ssh_key">"Are you sure you want to clear?"</string>
+
 </resources>

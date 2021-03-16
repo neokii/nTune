@@ -61,6 +61,11 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             handleConnect(IndiTuneActivity::class.java)
         }*/
 
+        btnSshKey.setOnClickListener {
+            val intent = Intent(this, SshKeySettingActivity::class.java)
+            startActivity(intent)
+        }
+
         btnGeneral.setOnClickListener {
             handleConnect(GeneralTuneActivity::class.java)
         }

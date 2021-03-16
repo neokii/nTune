@@ -2,7 +2,7 @@ package com.neokii.ntune
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
+import android.widget.Toast
 import com.jcraft.jsch.ChannelShell
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
@@ -54,11 +54,23 @@ class SshShell(
 
     init
     {
+        var privateKey = SettingUtil.getString(MyApp.getContext(), SshKeySettingActivity.PREF_PRIVATE_KEY, "")
+        if(privateKey.isEmpty())
+            privateKey = SshSession.privateKey
+
+        var publicKey = SettingUtil.getString(MyApp.getContext(), SshKeySettingActivity.PREF_PUBLIC_KEY, "")
+        if(publicKey.isEmpty())
+            publicKey = SshSession.publicKey
+
+        var passphrase = SettingUtil.getString(MyApp.getContext(), SshKeySettingActivity.PREF_PASSWORD_KEY, "")
+        if(passphrase.isEmpty())
+            passphrase = "passphrase"
+
         jsch.addIdentity(
             "id_rsa",
-            SshSession.privateKey.toByteArray(),
-            SshSession.publicKey.toByteArray(),
-            "passphrase".toByteArray()
+            privateKey.toByteArray(),
+            publicKey.toByteArray(),
+            passphrase.toByteArray()
         )
 
         session = jsch.getSession("root", host, port)
@@ -104,7 +116,13 @@ class SshShell(
 
             es?.shutdownNow()
         }
-        catch (e: Exception){}
+        catch (e: Exception)
+        {
+            //e.printStackTrace()
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(MyApp.getContext(), e.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private var es: ExecutorService? = null
