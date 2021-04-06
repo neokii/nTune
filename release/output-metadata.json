@@ -10,9 +10,9 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 1280,
-      "versionName": "1.2.8",
-      "outputFile": "nTune-1.2.8.apk"
+      "versionCode": 1290,
+      "versionName": "1.2.9",
+      "outputFile": "nTune-1.2.9.apk"
     }
   ]
 }

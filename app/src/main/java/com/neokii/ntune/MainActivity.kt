@@ -3,10 +3,10 @@ package com.neokii.ntune
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.DisplayMetrics
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -19,7 +19,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.neokii.ntune.databinding.CmdButtonBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
-import kotlin.concurrent.fixedRateTimer
 
 
 class MainActivity : AppCompatActivity(), SshShell.OnSshListener
@@ -87,6 +86,16 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
 
         btnGitAccount.setOnClickListener {
             handleGitAccount()
+        }
+
+        editHost.setOnKeyListener { v, keyCode, event -> Boolean
+            if(keyCode == KeyEvent.KEYCODE_ENTER)
+            {
+                (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(v.windowToken, 0)
+                return@setOnKeyListener true
+            }
+
+            return@setOnKeyListener false
         }
 
         btnGitAccount.visibility = View.GONE

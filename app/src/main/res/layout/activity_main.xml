@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textSize="14sp"
+                android:imeOptions="actionNone"
                 android:layout_margin="10dp" />
 
             <Button
