@@ -103,7 +103,9 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
         buildButtons()
         updateControls(false)
 
-        handleScan()
+        if(savedInstanceState == null || !savedInstanceState.getBoolean("launched", false)) {
+            handleScan()
+        }
     }
 
     override fun onDestroy() {
@@ -111,6 +113,11 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
 
         session?.close()
         shell?.close()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("launched", true)
     }
 
     private fun handleConnect(cls: Class<out BaseTuneActivity>)

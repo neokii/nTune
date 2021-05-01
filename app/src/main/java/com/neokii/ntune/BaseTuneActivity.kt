@@ -1,7 +1,11 @@
 package com.neokii.ntune
 
+import android.content.res.Configuration
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.view.View
+import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
@@ -32,6 +36,8 @@ abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeLis
 
         setContentView(R.layout.activity_tune)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
+        updateOrientaion(resources.configuration.orientation)
 
         intent?.let {
 
@@ -146,5 +152,19 @@ abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeLis
             }
             catch (e:Exception){}
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        updateOrientaion(newConfig.orientation)
+    }
+
+    private fun updateOrientaion(orientation: Int)
+    {
+        if(orientation == ORIENTATION_LANDSCAPE)
+            findViewById<View>(R.id.title).visibility = View.GONE
+        else
+            findViewById<View>(R.id.title).visibility = View.VISIBLE
     }
 }
