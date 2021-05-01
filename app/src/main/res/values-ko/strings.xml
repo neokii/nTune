@@ -54,6 +54,7 @@
 
     <string name="shell_flash_panda">"판다 플래싱"</string>
     <string name="shell_reboot">"재부팅"</string>
+    <string name="shell_rebuild">"전체 재빌드"</string>
 
     <string name="shell_launch_navdy_settings">"Navdy 설정"</string>
 
