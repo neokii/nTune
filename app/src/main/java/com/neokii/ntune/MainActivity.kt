@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             handleGitAccount()
         }
 
-        editHost.setOnKeyListener { v, keyCode, event -> Boolean
+        editHost.setOnKeyListener { v, keyCode, _ -> Boolean
             if(keyCode == KeyEvent.KEYCODE_ENTER)
             {
                 (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(v.windowToken, 0)
@@ -103,9 +103,11 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
         buildButtons()
         updateControls(false)
 
-        if(savedInstanceState == null || !savedInstanceState.getBoolean("launched", false)) {
+        if(!SettingUtil.getBoolean(this, "launched", false)) {
             handleScan()
         }
+
+        SettingUtil.setBoolean(this, "launched", true)
     }
 
     override fun onDestroy() {
@@ -113,11 +115,8 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
 
         session?.close()
         shell?.close()
-    }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean("launched", true)
+        SettingUtil.setBoolean(this, "launched", false)
     }
 
     private fun handleConnect(cls: Class<out BaseTuneActivity>)
