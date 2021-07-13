@@ -5,6 +5,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -13,7 +14,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
+class ExceptionCaptureActivity : AppCompatActivity() {
 
     lateinit var editLog: EditText
     private var host: String? = null
@@ -29,6 +30,7 @@ class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
             host?.let { h ->
 
                 val session = SshSession(it.getStringExtra("host"), 8022)
+
                 session.connect(object : SshSession.OnConnectListener {
                     override fun onConnect() {
                         session.exec(
@@ -36,17 +38,8 @@ class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
                             object : SshSession.OnResponseListener {
                                 override fun onResponse(res: String) {
 
-                                    if(res.isNullOrEmpty()) {
-                                        Snackbar.make(
-                                            findViewById(android.R.id.content),
-                                            R.string.eon_no_log,
-                                            Snackbar.LENGTH_LONG
-                                        )
-                                            .show()
-                                    }
-                                    else {
-                                        getLog(session, res)
-                                    }
+                                    getLog(session, res, true)
+                                    getLog(session, res, false)
                                 }
 
                                 override fun onEnd(e: Exception?) {
@@ -83,14 +76,16 @@ class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
         }
     }
 
-    fun getLog(session: SshSession, file: String) {
+    fun getLog(session: SshSession, file: String, json:Boolean) {
 
         session.exec(
             "cat /data/log/$file",
             object : SshSession.OnResponseListener {
                 override fun onResponse(res: String) {
-
-                    parseJson(res)
+                    if(json)
+                        parseJson(res)
+                    else
+                        addLog(res)
                 }
 
                 override fun onEnd(e: Exception?) {
@@ -107,40 +102,6 @@ class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
             })
     }
 
-
-    override fun onConnect() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onError(e: java.lang.Exception) {
-        TODO("Not yet implemented")
-    }
-
-    var matched = false
-    var connected = false
-    override fun onRead(res: String) {
-
-        if(!connected)
-        {
-            connected = true
-            addLog(getString(R.string.connected_exception_capture))
-        }
-
-        if(matched)
-        {
-            addLog(res)
-            if(res.matches(Regex("[A-Za-z]+(Error|Exception|Iteration): .+")))
-                matched = false
-        }
-        else
-        {
-            matched = res.contains("Traceback (")
-
-            if(matched)
-                addLog(res)
-        }
-    }
-
     private fun addLog(msg: String)
     {
         if(editLog.text.length > 1024*1024*2)
@@ -151,22 +112,41 @@ class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun parseJson(jsonText: String)
+    private fun parseJson(text: String)
     {
-        try {
-            val json = JSONObject(jsonText)
-            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            val date: String = simpleDateFormat.format(Date((json.getDouble("created")*1000L).toLong()))
-            addLog("[$date]\n\n${json.getString("exc_info")}")
-        }
-        catch (e: Exception)
-        {
-            Snackbar.make(
-                findViewById(android.R.id.content),
-                e.localizedMessage,
-                Snackbar.LENGTH_LONG
-            )
-                .show()
+        text.split("\n").forEach {
+
+            try {
+                val json = JSONObject(it)
+
+                var count = 0
+                if(json.has("level") && json.getString("level") == "ERROR")
+                {
+                    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                    val date: String = simpleDateFormat.format(Date((json.getDouble("created")*1000L).toLong()))
+
+                    if (json.has("exc_info")) {
+                        addLog("[$date]\n\n${json.getString("exc_info")}")
+                        count++
+                    }
+                    else if(json.has("msg\$s")) {
+                        addLog("[$date]\n\n${json.getString("msg\$s")}")
+                        count++
+                    }
+                }
+
+                /*if(count == 0) {
+                    Snackbar.make(
+                        findViewById(android.R.id.content),
+                        R.string.eon_no_log,
+                        Snackbar.LENGTH_LONG
+                    )
+                        .show()
+                }*/
+            }
+            catch (e: Exception)
+            {
+            }
         }
     }
 }
