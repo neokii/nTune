@@ -1,22 +1,22 @@
 package com.neokii.ntune
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.exception_capture.*
-import javax.xml.parsers.FactoryConfigurationError
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
 
     lateinit var editLog: EditText
     private var host: String? = null
-    private var shell: SshShell? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +27,52 @@ class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
         intent?.let {
             host = it.getStringExtra("host")
             host?.let { h ->
-                shell(h, arrayListOf("tmux a"))
+
+                val session = SshSession(it.getStringExtra("host"), 8022)
+                session.connect(object : SshSession.OnConnectListener {
+                    override fun onConnect() {
+                        session.exec(
+                            "ls -tr /data/log | tail -1",
+                            object : SshSession.OnResponseListener {
+                                override fun onResponse(res: String) {
+
+                                    if(res.isNullOrEmpty()) {
+                                        Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            R.string.eon_no_log,
+                                            Snackbar.LENGTH_LONG
+                                        )
+                                            .show()
+                                    }
+                                    else {
+                                        getLog(session, res)
+                                    }
+                                }
+
+                                override fun onEnd(e: Exception?) {
+
+                                    if (e != null) {
+                                        Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            e.localizedMessage,
+                                            Snackbar.LENGTH_LONG
+                                        )
+                                            .show()
+                                    }
+                                }
+                            })
+                    }
+
+                    override fun onFail(e: Exception) {
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            e.localizedMessage,
+                            Snackbar.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
             }
         }
 
@@ -38,28 +83,30 @@ class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        shell?.close()
+    fun getLog(session: SshSession, file: String) {
+
+        session.exec(
+            "cat /data/log/$file",
+            object : SshSession.OnResponseListener {
+                override fun onResponse(res: String) {
+
+                    parseJson(res)
+                }
+
+                override fun onEnd(e: Exception?) {
+
+                    if (e != null) {
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            e.localizedMessage,
+                            Snackbar.LENGTH_LONG
+                        )
+                            .show()
+                    }
+                }
+            })
     }
 
-    fun shell(host: String, cmds: ArrayList<String>)
-    {
-        if(shell == null || shell?.host != host || !shell?.isConnected()!!) {
-
-            if(shell != null)
-                shell?.close()
-
-            shell = SshShell(host, 8022, this)
-            shell?.start()
-        }
-
-        if(shell?.isConnected() == true)
-            addLog("\n")
-
-        for (cmd in cmds)
-            shell?.send(cmd)
-    }
 
     override fun onConnect() {
         TODO("Not yet implemented")
@@ -101,5 +148,25 @@ class ExceptionCaptureActivity : AppCompatActivity(), SshShell.OnSshListener {
 
         editLog.append(msg)
         editLog.append("\n")
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun parseJson(jsonText: String)
+    {
+        try {
+            val json = JSONObject(jsonText)
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            val date: String = simpleDateFormat.format(Date((json.getDouble("created")*1000L).toLong()))
+            addLog("[$date]\n\n${json.getString("exc_info")}")
+        }
+        catch (e: Exception)
+        {
+            Snackbar.make(
+                findViewById(android.R.id.content),
+                e.localizedMessage,
+                Snackbar.LENGTH_LONG
+            )
+                .show()
+        }
     }
 }

@@ -71,4 +71,6 @@ You must be connected to the panda at least once."</string>
 
     <string name="confirm_clear_ssh_key">"Are you sure you want to clear?"</string>
 
+    <string name="eon_no_log">"EON has no log."</string>
+
 </resources>
