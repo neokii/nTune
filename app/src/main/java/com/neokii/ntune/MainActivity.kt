@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.neokii.ntune.databinding.CmdButtonBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -56,13 +57,20 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             handleConnect(LqrTuneActivity::class.java)
         }
 
-        /*btnConnectIndi.setOnClickListener {
-            handleConnect(IndiTuneActivity::class.java)
-        }*/
+        btnConnectScc.setOnClickListener {
+            handleConnect(SccTuneActivity::class.java)
+        }
+
+        if(Feature.FEATURE_UNIVERSAL)
+            btnConnectScc.visibility = View.GONE
 
         btnSshKey.setOnClickListener {
             val intent = Intent(this, SshKeySettingActivity::class.java)
             startActivity(intent)
+        }
+
+        btnSyncTime.setOnClickListener {
+            syncTime()
         }
 
         btnGeneral.setOnClickListener {
@@ -125,7 +133,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
         if(host.isNotEmpty())
         {
             btnConnectLqr.isEnabled = false
-            //btnConnectIndi.isEnabled = false
+            btnConnectScc.isEnabled = false
 
             val imm: InputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -136,7 +144,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
                 override fun onConnect() {
 
                     btnConnectLqr.isEnabled = true
-                    //btnConnectIndi.isEnabled = true
+                    btnConnectScc.isEnabled = true
 
                     SettingUtil.setString(applicationContext, "last_host", host)
 
@@ -149,7 +157,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
                 override fun onFail(e: Exception) {
 
                     btnConnectLqr.isEnabled = true
-                    //btnConnectIndi.isEnabled = true
+                    btnConnectScc.isEnabled = true
                     Snackbar.make(
                         findViewById(android.R.id.content),
                         e.localizedMessage,
@@ -246,7 +254,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
                 binding.btnCmd.setOnClickListener {
                     val cmd = SshShell.cmdList[adapterPosition]
 
-                    val host = editHost.text.toString();
+                    val host = editHost.text.toString()
                     if(host.isNotEmpty())
                     {
                         if(cmd.confirm)
@@ -321,5 +329,20 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
         addLog(res)
     }
 
+    private fun syncTime()
+    {
+        val host = editHost.text.toString()
+
+        val pattern = "yyyy-MM-dd HH:mm:ss"
+        val simpleDateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+        simpleDateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val date: String = simpleDateFormat.format(Date())
+
+        if(host.isNotEmpty())
+        {
+            val cmd = "date -s \"$date\""
+            shell(host, arrayListOf(cmd))
+        }
+    }
 
 }

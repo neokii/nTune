@@ -37,7 +37,7 @@
             />
 
         <activity
-            android:name=".IndiTuneActivity"
+            android:name=".SccTuneActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:screenOrientation="fullSensor"

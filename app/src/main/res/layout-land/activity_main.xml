@@ -53,6 +53,14 @@
                 android:layout_margin="5dp"
                 android:text="@string/btn_connect_exception_capture" />
 
+            <Button
+                android:id="@+id/btnSshKey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:text="@string/btn_ssh_key" />
+
         </LinearLayout>
 
 
@@ -78,21 +86,21 @@
                 android:layout_margin="5dp"
                 android:text="@string/btn_connect_lqr" />
 
-            <!--Button
-                android:id="@+id/btnConnectIndi"
+            <Button
+                android:id="@+id/btnConnectScc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
-                android:text="@string/btn_connect_indi" /-->
+                android:text="@string/btn_connect_scc" />
 
             <Button
-                android:id="@+id/btnSshKey"
+                android:id="@+id/btnSyncTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
-                android:text="@string/btn_ssh_key" />
+                android:text="@string/btn_sync_time" />
 
         </LinearLayout>
 

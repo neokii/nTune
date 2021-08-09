@@ -14,7 +14,7 @@
     <string name="btn_connect_exception_capture">"Crash Log"</string>
     <string name="btn_connect_general">"General"</string>
     <string name="btn_connect_lqr">"LQR"</string>
-    <string name="btn_connect_indi">"INDI"</string>
+    <string name="btn_connect_scc">"SCC"</string>
 
     <string name="btn_git_account">"Git Account"</string>
 
@@ -72,5 +72,7 @@ You must be connected to the panda at least once."</string>
     <string name="confirm_clear_ssh_key">"Are you sure you want to clear?"</string>
 
     <string name="eon_no_log">"EON has no log."</string>
+
+    <string name="btn_sync_time">"Sync time"</string>
 
 </resources>

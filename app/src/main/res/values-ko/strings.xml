@@ -15,7 +15,7 @@
     <string name="btn_connect_exception_capture">"예외로그"</string>
     <string name="btn_connect_general">"일반"</string>
     <string name="btn_connect_lqr">"LQR"</string>
-    <string name="btn_connect_indi">"INDI"</string>
+    <string name="btn_connect_scc">"SCC"</string>
     <string name="btn_git_account">"Git 계정"</string>
 
     <string name="btn_clear_addresses">"모두삭제"</string>
@@ -70,5 +70,7 @@
     <string name="confirm_clear_ssh_key">"삭제하시겠습니까?"</string>
 
     <string name="eon_no_log">"이온에 로그가 없습니다."</string>
+
+    <string name="btn_sync_time">"시간동기화"</string>
 
 </resources>

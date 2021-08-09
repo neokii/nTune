@@ -24,34 +24,45 @@
 
             <ProgressBar
                 android:id="@+id/progBar"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_gravity="center_vertical" />
 
             <EditText
                 android:id="@+id/editHost"
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:imeOptions="actionNone"
-                android:layout_margin="10dp" />
+                android:layout_margin="3dp" />
 
             <Button
                 android:id="@+id/btnScan"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
+                android:layout_margin="3dp"
                 android:text="@string/btn_scan" />
 
             <Button
                 android:id="@+id/btnExceptionCapture"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
+                android:layout_margin="3dp"
                 android:text="@string/btn_connect_exception_capture" />
+
+            <Button
+                android:id="@+id/btnSshKey"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="3dp"
+                android:text="@string/btn_ssh_key" />
 
         </LinearLayout>
 
@@ -64,7 +75,8 @@
 
             <Button
                 android:id="@+id/btnGeneral"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
@@ -72,27 +84,30 @@
 
             <Button
                 android:id="@+id/btnConnectLqr"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
                 android:text="@string/btn_connect_lqr" />
 
-            <!--Button
-                android:id="@+id/btnConnectIndi"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnConnectScc"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
-                android:text="@string/btn_connect_indi" /-->
+                android:text="@string/btn_connect_scc" />
 
             <Button
-                android:id="@+id/btnSshKey"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnSyncTime"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
-                android:text="@string/btn_ssh_key" />
+                android:text="@string/btn_sync_time" />
 
         </LinearLayout>
 
