@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.exception_capture.*
@@ -29,43 +30,49 @@ class ExceptionCaptureActivity : AppCompatActivity() {
             host = it.getStringExtra("host")
             host?.let { h ->
 
-                val session = SshSession(it.getStringExtra("host"), 8022)
+                try {
+                    val session = SshSession(it.getStringExtra("host"), 8022)
 
-                session.connect(object : SshSession.OnConnectListener {
-                    override fun onConnect() {
-                        session.exec(
-                            "ls -tr /data/log | tail -1",
-                            object : SshSession.OnResponseListener {
-                                override fun onResponse(res: String) {
+                    session.connect(object : SshSession.OnConnectListener {
+                        override fun onConnect() {
+                            session.exec(
+                                "ls -tr /data/log | tail -1",
+                                object : SshSession.OnResponseListener {
+                                    override fun onResponse(res: String) {
 
-                                    getLog(session, res, true)
-                                    getLog(session, res, false)
-                                }
-
-                                override fun onEnd(e: Exception?) {
-
-                                    if (e != null) {
-                                        Snackbar.make(
-                                            findViewById(android.R.id.content),
-                                            e.localizedMessage,
-                                            Snackbar.LENGTH_LONG
-                                        )
-                                            .show()
+                                        getLog(session, res, true)
+                                        getLog(session, res, false)
                                     }
-                                }
-                            })
-                    }
 
-                    override fun onFail(e: Exception) {
-                        Snackbar.make(
-                            findViewById(android.R.id.content),
-                            e.localizedMessage,
-                            Snackbar.LENGTH_LONG
-                        )
-                            .show()
-                    }
+                                    override fun onEnd(e: Exception?) {
 
-                })
+                                        if (e != null) {
+                                            Snackbar.make(
+                                                findViewById(android.R.id.content),
+                                                e.localizedMessage,
+                                                Snackbar.LENGTH_LONG
+                                            )
+                                                .show()
+                                        }
+                                    }
+                                })
+                        }
+
+                        override fun onFail(e: Exception) {
+                            Snackbar.make(
+                                findViewById(android.R.id.content),
+                                e.localizedMessage,
+                                Snackbar.LENGTH_LONG
+                            )
+                                .show()
+                        }
+
+                    })
+                }
+
+                catch (e: Exception) {
+                    Toast.makeText(MyApp.getContext(), e.localizedMessage, Toast.LENGTH_LONG).show()
+                }
             }
         }
 

@@ -7,6 +7,7 @@ import android.speech.tts.TextToSpeech
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.snackbar.Snackbar
@@ -41,40 +42,47 @@ abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeLis
 
         intent?.let {
 
-            val session = SshSession(it.getStringExtra("host"), 8022)
-            session.connect(object : SshSession.OnConnectListener {
-                override fun onConnect() {
-                    session.exec(
-                        "cat ${getRemoteConfFile()}",
-                        object : SshSession.OnResponseListener {
-                            override fun onResponse(res: String) {
-                                start(res)
-                            }
-
-                            override fun onEnd(e: Exception?) {
-
-                                if (e != null) {
-                                    Snackbar.make(
-                                        findViewById(android.R.id.content),
-                                        e.localizedMessage,
-                                        Snackbar.LENGTH_LONG
-                                    )
-                                        .show()
+            try {
+                val session = SshSession(it.getStringExtra("host"), 8022)
+                session.connect(object : SshSession.OnConnectListener {
+                    override fun onConnect() {
+                        session.exec(
+                            "cat ${getRemoteConfFile()}",
+                            object : SshSession.OnResponseListener {
+                                override fun onResponse(res: String) {
+                                    start(res)
                                 }
-                            }
-                        })
-                }
 
-                override fun onFail(e: Exception) {
-                    Snackbar.make(
-                        findViewById(android.R.id.content),
-                        e.localizedMessage,
-                        Snackbar.LENGTH_LONG
-                    )
-                        .show()
-                }
+                                override fun onEnd(e: Exception?) {
 
-            })
+                                    if (e != null) {
+                                        Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            e.localizedMessage,
+                                            Snackbar.LENGTH_LONG
+                                        )
+                                            .show()
+                                    }
+                                }
+                            })
+                    }
+
+                    override fun onFail(e: Exception) {
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            e.localizedMessage,
+                            Snackbar.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+            }
+
+            catch (e: Exception) {
+                Toast.makeText(MyApp.getContext(), e.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+
         }
     }
 

@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -129,43 +132,49 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
 
     private fun handleConnect(cls: Class<out BaseTuneActivity>)
     {
-        val host = editHost.text.toString();
-        if(host.isNotEmpty())
-        {
-            btnConnectLqr.isEnabled = false
-            btnConnectScc.isEnabled = false
+        try {
+            val host = editHost.text.toString();
+            if(host.isNotEmpty())
+            {
+                btnConnectLqr.isEnabled = false
+                btnConnectScc.isEnabled = false
 
-            val imm: InputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(editHost.windowToken, 0)
+                val imm: InputMethodManager =
+                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(editHost.windowToken, 0)
 
-            session = SshSession(host, 8022)
-            session?.connect(object : SshSession.OnConnectListener {
-                override fun onConnect() {
+                session = SshSession(host, 8022)
+                session?.connect(object : SshSession.OnConnectListener {
+                    override fun onConnect() {
 
-                    btnConnectLqr.isEnabled = true
-                    btnConnectScc.isEnabled = true
+                        btnConnectLqr.isEnabled = true
+                        btnConnectScc.isEnabled = true
 
-                    SettingUtil.setString(applicationContext, "last_host", host)
+                        SettingUtil.setString(applicationContext, "last_host", host)
 
-                    val intent = Intent(this@MainActivity, cls)
+                        val intent = Intent(this@MainActivity, cls)
 
-                    intent.putExtra("host", host)
-                    startActivity(intent)
-                }
+                        intent.putExtra("host", host)
+                        startActivity(intent)
+                    }
 
-                override fun onFail(e: Exception) {
+                    override fun onFail(e: Exception) {
 
-                    btnConnectLqr.isEnabled = true
-                    btnConnectScc.isEnabled = true
-                    Snackbar.make(
-                        findViewById(android.R.id.content),
-                        e.localizedMessage,
-                        Snackbar.LENGTH_LONG
-                    )
-                        .show()
-                }
-            })
+                        btnConnectLqr.isEnabled = true
+                        btnConnectScc.isEnabled = true
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            e.localizedMessage,
+                            Snackbar.LENGTH_LONG
+                        )
+                            .show()
+                    }
+                })
+            }
+        }
+
+        catch (e: Exception) {
+            Toast.makeText(MyApp.getContext(), e.localizedMessage, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -301,20 +310,27 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
 
     fun shell(host: String, cmds: ArrayList<String>)
     {
-        if(shell == null || shell?.host != host || !shell?.isConnected()!!) {
+        try {
+            if(shell == null || shell?.host != host || !shell?.isConnected()!!) {
 
-            if(shell != null)
-                shell?.close()
+                if(shell != null)
+                    shell?.close()
 
-            shell = SshShell(host, 8022, this)
-            shell?.start()
+                shell = SshShell(host, 8022, this)
+                shell?.start()
+            }
+
+            if(shell?.isConnected() == true)
+                addLog("\n")
+
+            for (cmd in cmds)
+                shell?.send(cmd)
         }
-
-        if(shell?.isConnected() == true)
-            addLog("\n")
-
-        for (cmd in cmds)
-            shell?.send(cmd)
+        catch (e: Exception) {
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(MyApp.getContext(), e.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     override fun onConnect() {
