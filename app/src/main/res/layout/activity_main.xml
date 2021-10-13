@@ -30,7 +30,7 @@
 
             <EditText
                 android:id="@+id/editHost"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textSize="13sp"
@@ -39,32 +39,49 @@
 
             <Button
                 android:id="@+id/btnScan"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="3dp"
                 android:text="@string/btn_scan" />
 
-            <Button
-                android:id="@+id/btnExceptionCapture"
-                android:layout_width="0dp"
+            <CheckBox
+                android:id="@+id/checkComma3"
+                android:layout_width="wrap_content"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="3dp"
-                android:text="@string/btn_connect_exception_capture" />
-
-            <Button
-                android:id="@+id/btnSshKey"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="3dp"
-                android:text="@string/btn_ssh_key" />
+                android:text="@string/btn_comma3" />
 
         </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnExceptionCapture"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="3dp"
+            android:text="@string/btn_connect_exception_capture" />
+
+        <Button
+            android:id="@+id/btnSshKey"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="3dp"
+            android:text="@string/btn_ssh_key" />
+
+    </LinearLayout>
 
 
         <LinearLayout

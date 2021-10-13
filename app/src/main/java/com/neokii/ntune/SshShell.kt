@@ -27,7 +27,7 @@ class SshShell(
     )
 
     companion object {
-        val cmdList = arrayListOf(
+        val cmdList_eon = arrayListOf(
 
             CmdItem(R.string.shell_create_prebuilt, false, arrayListOf("touch /data/openpilot/prebuilt")),
             CmdItem(R.string.shell_remove_prebuilt, false, arrayListOf("rm /data/openpilot/prebuilt")),
@@ -39,13 +39,38 @@ class SshShell(
             CmdItem(R.string.shell_reset_liveparams, true, arrayListOf("rm /data/params/d/LiveParameters")),
             CmdItem(R.string.shell_remove_realdata, true, arrayListOf("rm -rf /sdcard/realdata")),
             CmdItem(R.string.shell_remove_videos, true, arrayListOf("rm -rf /sdcard/videos")),
-            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board && pkill -f boardd && ./flash.sh")),
+            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board", "pkill -f boardd ", "./flash.sh")),
+            CmdItem(R.string.shell_recover_panda, true, arrayListOf("cd /data/openpilot/panda/board", "pkill -f boardd ", "./recover.sh")),
             CmdItem(R.string.shell_launch_navdy_settings, false, arrayListOf("am start -n com.neokii.openpilot/.MainActivity")),
             CmdItem(R.string.shell_rebuild, true, arrayListOf("cd /data/openpilot", "scons -c", "rm .sconsign.dblite",
-                "rm -rf /tmp/scons_cache", "rm prebuilt", "reboot")),
+                "rm -rf /tmp/scons_cache", "rm prebuilt",
+                "reboot")),
             CmdItem(R.string.shell_reboot, true, arrayListOf("reboot"))
-
         )
+
+        val cmdList_tici = arrayListOf(
+
+            CmdItem(R.string.shell_create_prebuilt, false, arrayListOf("touch /data/openpilot/prebuilt")),
+            CmdItem(R.string.shell_remove_prebuilt, false, arrayListOf("rm /data/openpilot/prebuilt")),
+            CmdItem(R.string.shell_git_reset_hard, true, arrayListOf("cd /data/openpilot && git reset --hard")),
+            CmdItem(R.string.shell_git_pull, false, arrayListOf("cd /data/openpilot && git pull")),
+            CmdItem(R.string.shell_reset_calibration, true, arrayListOf("rm /data/params/d/CalibrationParams")),
+            CmdItem(R.string.shell_reset_liveparams, true, arrayListOf("rm /data/params/d/LiveParameters")),
+            CmdItem(R.string.shell_remove_realdata, true, arrayListOf("rm -rf /data/media/0/realdata")),
+            CmdItem(R.string.shell_remove_videos, true, arrayListOf("rm -rf /data/media/0/videos")),
+            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board", "pkill -f boardd ", "./flash.sh")),
+            CmdItem(R.string.shell_recover_panda, true, arrayListOf("cd /data/openpilot/panda/board", "pkill -f boardd ", "./recover.sh")),
+            CmdItem(R.string.shell_rebuild, true, arrayListOf("cd /data/openpilot", "scons -c", "rm .sconsign.dblite",
+                "rm -rf /tmp/scons_cache", "rm prebuilt",
+                "sudo reboot")),
+            CmdItem(R.string.shell_reboot, true, arrayListOf("sudo reboot")),
+        )
+
+        var cmdList = if(Feature.is_tici()) cmdList_tici else cmdList_eon
+
+        fun refesh() {
+            cmdList = if(Feature.is_tici()) cmdList_tici else cmdList_eon
+        }
     }
 
     private val jsch: JSch = JSch()
@@ -80,7 +105,7 @@ class SshShell(
             passphrase.toByteArray()
         )
 
-        session = jsch.getSession("root", host, port)
+        session = jsch.getSession(if(Feature.is_tici()) "comma" else "root", host, port)
         val config = Properties()
         config["StrictHostKeyChecking"] = "no"
         session.setConfig(config)

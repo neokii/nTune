@@ -4,6 +4,8 @@
 
     <string name="btn_scan">"이온 찾기"</string>
 
+    <string name="btn_comma3">"콤마 3"</string>
+
     <string name="format_scan_success">"이온을 찾았습니다: %s"</string>
     <string name="scan_fail">"이온을 찾지 못하였습니다."</string>
 
@@ -53,6 +55,7 @@
     <string name="shell_remove_videos">"videos 삭제"</string>
 
     <string name="shell_flash_panda">"판다 플래싱"</string>
+    <string name="shell_recover_panda">"판다 복구"</string>
     <string name="shell_reboot">"재부팅"</string>
     <string name="shell_rebuild">"전체 재빌드"</string>
 
@@ -72,5 +75,7 @@
     <string name="eon_no_log">"이온에 로그가 없습니다."</string>
 
     <string name="btn_sync_time">"시간동기화"</string>
+
+    <string name="tune_scc_v_cruise_factor">"선행차가 없는 상태서 순항속도가 설정속도보다 작으면 올리고 반대면 내리세요"</string>
 
 </resources>

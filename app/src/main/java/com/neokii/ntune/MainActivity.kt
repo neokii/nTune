@@ -40,10 +40,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             //actionBar.setDisplayHomeAsUpEnabled(true)
             try {
                 val packageInfo = packageManager.getPackageInfo(packageName, 0)
-                actionBar.title = getString(R.string.app_name) + " " + packageInfo.versionName
-
                 val universal = if (Feature.FEATURE_UNIVERSAL) "Universal" else "HKG Only"
-
                 actionBar.title = "${getString(R.string.app_name)} ${packageInfo.versionName} $universal"
             } catch (e: java.lang.Exception) {
             }
@@ -107,6 +104,15 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             }
 
             return@setOnKeyListener false
+        }
+
+        checkComma3?.isChecked = SettingUtil.getBoolean(applicationContext, "is_tici", false)
+
+        checkComma3?.setOnCheckedChangeListener { _, isChecked ->
+            SettingUtil.setBoolean(applicationContext, "is_tici", isChecked)
+
+            SshShell.refesh()
+            listView.adapter?.notifyDataSetChanged()
         }
 
         btnGitAccount.visibility = View.GONE

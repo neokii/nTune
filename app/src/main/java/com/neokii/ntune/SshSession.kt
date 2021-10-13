@@ -84,7 +84,7 @@ class SshSession(val host: String, val port: Int) {
         Executors.newSingleThreadExecutor().execute {
 
             try {
-                session = jsch.getSession("root", host, port)
+                session = jsch.getSession(if(Feature.is_tici()) "comma" else "root", host, port)
                 val config = Properties()
                 config["StrictHostKeyChecking"] = "no"
                 session.setConfig(config)

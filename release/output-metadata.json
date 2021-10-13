@@ -1,18 +1,20 @@
 {
-  "version": 2,
+  "version": 3,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "com.neokii.ntune",
-  "variantName": "processReleaseResources",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 1360,
-      "versionName": "1.3.6",
-      "outputFile": "nTune-1.3.6.apk"
+      "attributes": [],
+      "versionCode": 1420,
+      "versionName": "1.4.2",
+      "outputFile": "nTune-1.4.2.apk"
     }
-  ]
+  ],
+  "elementType": "File"
 }

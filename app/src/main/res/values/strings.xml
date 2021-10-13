@@ -3,6 +3,8 @@
 
     <string name="btn_scan">"Find EON"</string>
 
+    <string name="btn_comma3">"Comma 3"</string>
+
     <string name="format_scan_success">"Found EON: %s"</string>
     <string name="scan_fail">"Couldn't find EON."</string>
 
@@ -53,6 +55,7 @@ You must be connected to the panda at least once."</string>
 
 
     <string name="shell_flash_panda">"Flash Panda firmware"</string>
+    <string name="shell_recover_panda">"Recover Panda"</string>
     <string name="shell_reboot">"Reboot"</string>
     <string name="shell_rebuild">"Clean &amp; Rebuild"</string>
 
@@ -74,5 +77,9 @@ You must be connected to the panda at least once."</string>
     <string name="eon_no_log">"EON has no log."</string>
 
     <string name="btn_sync_time">"Sync time"</string>
+
+    <string name="tune_scc_v_cruise_factor">""</string>
+
+
 
 </resources>
