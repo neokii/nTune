@@ -43,6 +43,7 @@
     <string name="shell_remove_prebuilt">"prebuilt 삭제"</string>
 
     <string name="shell_git_reset_hard">"Git Reset"</string>
+    <string name="shell_git_reset_hard_back_1">"Git Reset HEAD~1"</string>
     <string name="shell_git_pull">"Git Pull"</string>
 
     <string name="shell_launch_android_settings">"시스템 설정"</string>
