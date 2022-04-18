@@ -40,9 +40,11 @@ class SshShell(
             CmdItem(R.string.shell_reset_liveparams, true, arrayListOf("rm /data/params/d/LiveParameters")),
             CmdItem(R.string.shell_remove_realdata, true, arrayListOf("rm -rf /sdcard/realdata")),
             CmdItem(R.string.shell_remove_videos, true, arrayListOf("rm -rf /sdcard/videos")),
-            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board", "pkill -f boardd ", "./flash.sh")),
-            CmdItem(R.string.shell_recover_panda, true, arrayListOf("cd /data/openpilot/panda/board", "pkill -f boardd ", "./recover.sh")),
+            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./flash.sh && reboot")),
+            CmdItem(R.string.shell_recover_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./recover.sh && reboot")),
             CmdItem(R.string.shell_launch_navdy_settings, false, arrayListOf("am start -n com.neokii.openpilot/.MainActivity")),
+            CmdItem(R.string.shell_clear_dtc, true, arrayListOf("cd /data/openpilot/selfdrive/debug", "pkill -f boardd", "./clear_dtc.py",
+                "reboot")),
             CmdItem(R.string.shell_rebuild, true, arrayListOf("cd /data/openpilot", "scons -c", "rm .sconsign.dblite",
                 "rm -rf /tmp/scons_cache", "rm prebuilt",
                 "reboot")),
@@ -60,8 +62,10 @@ class SshShell(
             CmdItem(R.string.shell_reset_liveparams, true, arrayListOf("rm /data/params/d/LiveParameters")),
             CmdItem(R.string.shell_remove_realdata, true, arrayListOf("rm -rf /data/media/0/realdata")),
             CmdItem(R.string.shell_remove_videos, true, arrayListOf("rm -rf /data/media/0/videos")),
-            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board", "pkill -f boardd ", "./flash.sh")),
-            CmdItem(R.string.shell_recover_panda, true, arrayListOf("cd /data/openpilot/panda/board", "pkill -f boardd ", "./recover.sh")),
+            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./flash.sh && sudo reboot")),
+            CmdItem(R.string.shell_recover_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./recover.sh && sudo reboot")),
+            CmdItem(R.string.shell_clear_dtc, true, arrayListOf("cd /data/openpilot/selfdrive/debug", "pkill -f boardd", "./clear_dtc.py",
+                "sudo reboot")),
             CmdItem(R.string.shell_rebuild, true, arrayListOf("cd /data/openpilot", "scons -c", "rm .sconsign.dblite",
                 "rm -rf /tmp/scons_cache", "rm prebuilt",
                 "sudo reboot")),
@@ -122,11 +126,11 @@ class SshShell(
 
         try {
 
-            session.connect(5000)
+            session.connect(10000)
 
             channel = session.openChannel("shell") as ChannelShell
             channel?.let {
-                it.connect(5000)
+                it.connect(10000)
             }
 
             val bufferedReader = BufferedReader(InputStreamReader(channel?.inputStream))

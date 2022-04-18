@@ -102,8 +102,8 @@ class TuneSwitchFragment : Fragment() {
         session = SshSession(host, 8022)
         session?.connect(object: SshSession.OnConnectListener{
             override fun onConnect() {
-                updateValue()
                 enableButtons(true)
+                updateValue()
             }
 
             override fun onFail(e: Exception) {

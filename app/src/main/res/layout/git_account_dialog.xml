@@ -82,14 +82,14 @@
         android:orientation="horizontal"
         android:layout_margin="8dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@android:string/cancel"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnOk"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

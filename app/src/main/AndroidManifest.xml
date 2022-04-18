@@ -48,6 +48,16 @@
             android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".IndiTuneActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TorqueTuneActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".SccTuneActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:screenOrientation="fullSensor"

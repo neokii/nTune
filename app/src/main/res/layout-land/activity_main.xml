@@ -35,9 +35,9 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="14sp"
                 android:imeOptions="actionNone"
-                android:layout_margin="10dp" />
+                android:layout_margin="5dp" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnScan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:layout_margin="5dp"
                 android:text="@string/btn_scan" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnExceptionCapture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,13 +53,21 @@
                 android:layout_margin="5dp"
                 android:text="@string/btn_connect_exception_capture" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSshKey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
                 android:text="@string/btn_ssh_key" />
+
+            <CheckBox
+                android:id="@+id/checkComma3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="3dp"
+                android:text="@string/btn_comma3" />
 
         </LinearLayout>
 
@@ -70,7 +78,7 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnGeneral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,7 +86,7 @@
                 android:layout_margin="5dp"
                 android:text="@string/btn_connect_general" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnConnectLqr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,7 +94,25 @@
                 android:layout_margin="5dp"
                 android:text="@string/btn_connect_lqr" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnConnectIndi"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:text="@string/btn_connect_indi" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnConnectTorque"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:text="@string/btn_connect_torque" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnConnectScc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,21 +120,16 @@
                 android:layout_margin="5dp"
                 android:text="@string/btn_connect_scc" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSyncTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
-                android:text="@string/btn_sync_time" />
+                android:text="@string/btn_sync_time"
+                android:visibility="gone"/>
 
-            <CheckBox
-                android:id="@+id/checkComma3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="3dp"
-                android:text="@string/btn_comma3" />
+
 
         </LinearLayout>
 
@@ -138,7 +159,7 @@
             android:alignmentMode="alignBounds"
             /-->
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnGitAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

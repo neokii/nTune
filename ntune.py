@@ -138,7 +138,7 @@ class nTune():
     if self.checkValue("steerRateCost", 0.1, 1.5, 0.6):
       updated = True
 
-    if self.checkValue("cameraOffset", -1.0, 1.0, 0.06):
+    if self.checkValue("pathOffset", -1.0, 1.0, 0.0):
       updated = True
 
     return updated
@@ -215,16 +215,12 @@ class nTune():
           self.config["scale"] = round(self.CP.lateralTuning.lqr.scale, 2)
           self.config["ki"] = round(self.CP.lateralTuning.lqr.ki, 3)
           self.config["dcGain"] = round(self.CP.lateralTuning.lqr.dcGain, 6)
-          self.config["steerLimitTimer"] = round(self.CP.steerLimitTimer, 2)
-          self.config["steerMax"] = round(self.CP.steerMaxV[0], 2)
 
         elif self.CP.lateralTuning.which() == 'indi' and self.indi is not None:
           self.config["innerLoopGain"] = round(self.CP.lateralTuning.indi.innerLoopGain, 2)
           self.config["outerLoopGain"] = round(self.CP.lateralTuning.indi.outerLoopGain, 2)
           self.config["timeConstant"] = round(self.CP.lateralTuning.indi.timeConstant, 2)
           self.config["actuatorEffectiveness"] = round(self.CP.lateralTuning.indi.actuatorEffectiveness, 2)
-          self.config["steerLimitTimer"] = round(self.CP.steerLimitTimer, 2)
-          self.config["steerMax"] = round(self.CP.steerMaxV[0], 2)
 
         else:
           self.config["useLiveSteerRatio"] = 1.

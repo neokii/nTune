@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="horizontal">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPrivateFile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             android:text="@string/btn_ssh_key_select_private_file"
             />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPublicFile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:text="@string/btn_ssh_key_select_public_file"
             />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnClear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

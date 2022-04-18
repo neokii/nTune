@@ -16,6 +16,8 @@
 
     <string name="btn_connect_exception_capture">"예외로그"</string>
     <string name="btn_connect_general">"일반"</string>
+    <string name="btn_connect_torque">"Torque"</string>
+    <string name="btn_connect_indi">"INDI"</string>
     <string name="btn_connect_lqr">"LQR"</string>
     <string name="btn_connect_scc">"SCC"</string>
     <string name="btn_git_account">"Git 계정"</string>
@@ -29,12 +31,17 @@
     <string name="btn_decrease">"내리기 (-)"</string>
     <string name="btn_increase">"올리기 (+)"</string>
 
+    <string name="btn_move_to_left">"왼쪽 (-)"</string>
+    <string name="btn_move_to_right">"오른쪽 (+)"</string>
+
     <string name="general_use_live_sr">"고정값이 아닌 학습 steerRatio를 사용합니다."</string>
 
     <string name="conf_load_failed">"이온에서 설정파일을 불러오지 못하였습니다.
 최소 한번 판다와 연결이 되어야 합니다."</string>
 
-    <string name="tune_camera_offset_desc">"차량을 왼쪽으로 이동하시려면 증가시키고, 반대의 경우 감소시키세요."</string>
+    <string name="tune_path_offset_desc">"차량을 오른쪽으로 이동하시려면 증가시키고, 반대의 경우 감소시키세요."</string>
+
+    <string name="tune_lqr_c0_desc">"작을수록 더 부더럽고 묵직해집니다. (기본 1.0)"</string>
 
     <string name="confirm">"진행하시겠습니까?"</string>
 
@@ -62,6 +69,8 @@
 
     <string name="shell_launch_navdy_settings">"Navdy 설정"</string>
 
+    <string name="shell_clear_dtc">"오류코드삭제"</string>
+
     <string name="btn_ssh_key">"SSH 키"</string>
     <string name="btn_ssh_key_select_private_file">"개인키"</string>
     <string name="btn_ssh_key_select_public_file">"공개키(선택사항)"</string>
@@ -79,4 +88,18 @@
 
     <string name="tune_scc_v_cruise_factor">"선행차가 없는 상태서 순항속도가 설정속도보다 작으면 올리고 반대면 내리세요"</string>
 
+    <string name="lat_indi_actuatorEffectiveness">"너무 높음: 약함, 엉성한 레인 센터링, 느린 진동, 높은 곡률을 따라갈 수 없음
+너무 낮음: 과한출력, 빠른 진동
+적당: 차선 중앙을 유지할 수 있는 가장 높은 값"</string>
+    <string name="lat_indi_timeConstant">"너무 높음: 느린 레인 센터링, 과도한 노이즈 제거
+너무 낮음: 노이즈 심함, 모든 외란에 반응, 빠른 작동으로 인해 차선 중앙을 유지하지 못할 수 있음
+"</string>
+    <string name="lat_indi_innerLoopGain">"조향 속도 오류 이득
+너무 높음: 높은 곡률에서 급격한 진동
+너무 낮음: 느리고 원하는 조향 각도를 달성할 수 없음
+적당: 높은 곡률 빠르게(알맞게) 진입"</string>
+    <string name="lat_indi_outerLoopGain">"조향 오차 이득
+너무 높음: 급격한 레인 센터링, 코너시 오버스티어링
+너무 낮음: 느림, 차선을 넘어감
+적당: 좋은 차선 중앙유지"</string>
 </resources>

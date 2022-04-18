@@ -15,6 +15,8 @@
 
     <string name="btn_connect_exception_capture">"Crash Log"</string>
     <string name="btn_connect_general">"General"</string>
+    <string name="btn_connect_torque">"Torque"</string>
+    <string name="btn_connect_indi">"INDI"</string>
     <string name="btn_connect_lqr">"LQR"</string>
     <string name="btn_connect_scc">"SCC"</string>
 
@@ -28,6 +30,9 @@
     <string name="btn_decrease">"Decrease (-)"</string>
     <string name="btn_increase">"Increase (+)"</string>
 
+    <string name="btn_move_to_left">"Move to Left (-)"</string>
+    <string name="btn_move_to_right">"Move to Right (+)"</string>
+
     <string name="general_use_live_sr">"Use the live steerRatio rather than a fixed value."</string>
 
 
@@ -36,7 +41,9 @@ You must be connected to the panda at least once."</string>
 
     <string name="confirm">"Are you sure?"</string>
 
-    <string name="tune_camera_offset_desc">"Increase to move the vehicle to the left, decrease to move it to the right."</string>
+    <string name="tune_path_offset_desc">"Increase to move the vehicle to the right, decrease to move it to the left."</string>
+
+    <string name="tune_lqr_c0_desc">"The smaller it is, the softer and heavier it will be. (default 1.0)"</string>
 
     <string name="shell_create_prebuilt">"Create prebuilt"</string>
     <string name="shell_remove_prebuilt">"Remove prebuilt"</string>
@@ -62,6 +69,8 @@ You must be connected to the panda at least once."</string>
 
     <string name="shell_launch_navdy_settings">"Navdy Settings"</string>
 
+    <string name="shell_clear_dtc">"Clear dtc"</string>
+
 
 
     <string name="btn_ssh_key">"SSH Key"</string>
@@ -81,6 +90,22 @@ You must be connected to the panda at least once."</string>
 
     <string name="tune_scc_v_cruise_factor">""</string>
 
+    <string name="lat_indi_actuatorEffectiveness">"As effectiveness increases, actuation strength decreases
+Too high: weak, sloppy lane centering, slow oscillation, can't follow high curvature, high steering error causes snappy corrections
+Too low: overpower, saturation, jerky, fast oscillation, bang-bang control
+Just right: Highest value able to maintain good lane centering."</string>
+    <string name="lat_indi_timeConstant">"Exponential moving average of prior output steer
+Too high: sloppy lane centering
+Too low: noisy actuation, responds to every bump, maybe unable to maintain lane center due to rapid actuation
+Just right: above noisy actuation and lane centering instability"</string>
+    <string name="lat_indi_innerLoopGain">"Steer rate error gain
+Too high: jerky oscillation in high curvature
+Too low: sloppy, cannot accomplish desired steer angle
+Just right: brief snap on entering high curvature"</string>
+    <string name="lat_indi_outerLoopGain">"Steer error gain
+Too high: twitchy hyper lane centering, oversteering
+Too low: sloppy, all over lane
+Just right: crisp lane centering"</string>
 
 
 </resources>

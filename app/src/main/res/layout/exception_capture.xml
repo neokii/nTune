@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="LabelFor" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@id/btnCopy"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

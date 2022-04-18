@@ -89,7 +89,7 @@ class SshSession(val host: String, val port: Int) {
                 config["StrictHostKeyChecking"] = "no"
                 session.setConfig(config)
 
-                session.connect(5000)
+                session.connect(10000)
 
                 Handler(Looper.getMainLooper()).post {
                     listener?.onConnect()

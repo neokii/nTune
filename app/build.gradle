@@ -10,12 +10,29 @@ android {
 
     defaultConfig {
         applicationId "com.neokii.ntune"
-        minSdkVersion 23
+        minSdkVersion 26
         targetSdkVersion 29
-        versionCode 1440
-        versionName "1.4.4"
+        versionCode 1540
+        versionName "1.5.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    flavorDimensions "api"
+
+    productFlavors {
+
+        legacy {
+            dimension "api"
+            minSdkVersion 23
+            //versionCode 20000  + android.defaultConfig.versionCode
+            versionNameSuffix "-legacy-minSDK23"
+        }
+
+        defaultType {
+            dimension "api"
+            minSdkVersion 26
+        }
     }
 
     android.applicationVariants.all { variant ->
@@ -54,6 +71,7 @@ dependencies {
     implementation 'com.reginald:editspinner:1.1.0'
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-    implementation 'com.github.mwiede:jsch:0.1.69'
+    defaultTypeImplementation 'com.github.mwiede:jsch:0.1.69'
+    legacyImplementation 'com.jcraft:jsch:0.1.55'
 
 }

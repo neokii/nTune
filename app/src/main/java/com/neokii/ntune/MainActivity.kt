@@ -57,6 +57,14 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             handleConnect(LqrTuneActivity::class.java)
         }
 
+        btnConnectIndi.setOnClickListener {
+            handleConnect(IndiTuneActivity::class.java)
+        }
+
+        btnConnectTorque.setOnClickListener {
+            handleConnect(TorqueTuneActivity::class.java)
+        }
+
         btnConnectScc.setOnClickListener {
             handleConnect(SccTuneActivity::class.java)
         }

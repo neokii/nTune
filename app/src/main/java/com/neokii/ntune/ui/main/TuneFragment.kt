@@ -2,6 +2,7 @@ package com.neokii.ntune.ui.main
 
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -182,8 +183,8 @@ class TuneFragment : Fragment() {
         session = SshSession(host, 8022)
         session?.connect(object: SshSession.OnConnectListener{
             override fun onConnect() {
-                updateValue()
                 enableButtons(true)
+                updateValue()
             }
 
             override fun onFail(e: Exception) {
@@ -271,14 +272,22 @@ class TuneFragment : Fragment() {
         //session?.send("mkfifo /tmp/ntune_pipe || echo \"reload\" > /tmp/ntune_pipe", null)
     }
 
-    private fun enableButtons(enabled:Boolean)
+    private fun enableButtons(enabled: Boolean)
     {
         try {
             btnReset.isEnabled = enabled
             btnIncrease.isEnabled = enabled
             btnDecrease.isEnabled = enabled
+
+            if(enabled)
+                textValue.setTextColor(0xFF50B050.toInt())
+            else
+                textValue.setTextColor(0xFF505050.toInt())
         }
-        catch (e:Exception){}
+        catch (e:Exception)
+        {
+            e.printStackTrace()
+        }
     }
 
     private fun showSnackbar(msg: String)

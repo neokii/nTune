@@ -23,11 +23,11 @@ class LqrTuneActivity: BaseTuneActivity() {
 
             add(TuneItemInfo("dcGain", json.getDouble("dcGain").toFloat(), 0.0020f, 0.0040f, 0.0001f, 6))
 
-            add(TuneItemInfo("steerLimitTimer", json.getDouble("steerLimitTimer").toFloat(),
-                0.5f, 3.0f, 0.05f, 3))
+            //add(TuneItemInfo("steerLimitTimer", json.getDouble("steerLimitTimer").toFloat(),
+            //    0.5f, 3.0f, 0.05f, 3))
 
-            add(TuneItemInfo("steerMax", json.getDouble("steerMax").toFloat(),
-                0.5f, 3.0f, 0.05f, 3))
+            //add(TuneItemInfo("steerMax", json.getDouble("steerMax").toFloat(),
+            //    0.5f, 3.0f, 0.05f, 3))
         }
     }
 }

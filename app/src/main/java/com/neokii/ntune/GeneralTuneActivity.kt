@@ -12,6 +12,9 @@ class GeneralTuneActivity: BaseTuneActivity() {
 
         val list = ArrayList<TuneItemInfo>()
 
+        list.add(TuneItemInfo("pathOffset", json.getDouble("pathOffset").toFloat(),
+            -1.0f, 1.0f, 0.01f, 2, R.string.tune_path_offset_desc))
+
         if(!Feature.FEATURE_UNIVERSAL)
         {
             list.add(TuneItemInfo("useLiveSteerRatio", json.getDouble("useLiveSteerRatio").toFloat(),
@@ -29,9 +32,6 @@ class GeneralTuneActivity: BaseTuneActivity() {
 
         list.add(TuneItemInfo("steerActuatorDelay", json.getDouble("steerActuatorDelay").toFloat(),
             0.0f, 0.8f, 0.05f, 3))
-
-        list.add(TuneItemInfo("cameraOffset", json.getDouble("cameraOffset").toFloat(),
-            -1.0f, 1.0f, 0.01f, 2, R.string.tune_camera_offset_desc))
 
         return list
     }
