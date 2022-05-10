@@ -1,21 +1,21 @@
 package com.neokii.ntune
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -126,7 +126,7 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
         btnGitAccount.visibility = View.GONE
 
         buildButtons()
-        updateControls(false)
+        updateScan(false)
 
         if(!SettingUtil.getBoolean(this, "launched", false)) {
             handleScan()
@@ -158,8 +158,7 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
             val host = editHost.text.toString();
             if(host.isNotEmpty())
             {
-                btnConnectLqr.isEnabled = false
-                btnConnectScc.isEnabled = false
+                updateControls(true)
 
                 val imm: InputMethodManager =
                     getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -169,8 +168,7 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
                 session?.connect(object : SshSession.OnConnectListener {
                     override fun onConnect() {
 
-                        btnConnectLqr.isEnabled = true
-                        btnConnectScc.isEnabled = true
+                        updateControls(false)
 
                         SettingUtil.setString(applicationContext, "last_host", host)
 
@@ -182,8 +180,7 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
 
                     override fun onFail(e: Exception) {
 
-                        btnConnectLqr.isEnabled = true
-                        btnConnectScc.isEnabled = true
+                        updateControls(false)
                         Snackbar.make(
                             findViewById(android.R.id.content),
                             e.localizedMessage,
@@ -201,6 +198,17 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
     }
 
     private fun updateControls(pending: Boolean)
+    {
+        btnGeneral.isEnabled = !pending
+        btnConnectLqr.isEnabled = !pending
+        btnConnectIndi.isEnabled = !pending
+        btnConnectTorque.isEnabled = !pending
+        btnConnectScc.isEnabled = !pending
+
+        btnExceptionCapture.isEnabled = !pending
+    }
+
+    private fun updateScan(pending: Boolean)
     {
         if(pending)
         {
@@ -224,12 +232,12 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
             return
 
         pendingScan = true
-        updateControls(pendingScan)
+        updateScan(pendingScan)
         EonScanner().startScan(applicationContext, 8022, object : EonScanner.OnResultListener {
             override fun onResult(ip: String?) {
 
                 pendingScan = false
-                updateControls(pendingScan)
+                updateScan(pendingScan)
 
                 if (!TextUtils.isEmpty(ip)) {
                     editHost.setText(ip)
@@ -288,21 +296,26 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
                     val host = editHost.text.toString()
                     if(host.isNotEmpty())
                     {
-                        if(cmd.confirm)
-                        {
-                            AlertDialog.Builder(this@MainActivity)
-                                .setMessage(R.string.confirm)
-                                .setNegativeButton(android.R.string.cancel, null)
-                                .setPositiveButton(
-                                    android.R.string.ok
-                                ) { _, _ ->
-                                    shell(host, cmd.cmds)
-                                }
-                                .show()
+                        if(cmd.cmds.size == 1 && cmd.cmds[0].equals("git_change_branch")) {
+                            changeBranch()
                         }
-                        else
-                        {
-                            shell(host, cmd.cmds)
+                        else {
+                            if(cmd.confirm)
+                            {
+                                AlertDialog.Builder(this@MainActivity)
+                                    .setMessage(R.string.confirm)
+                                    .setNegativeButton(android.R.string.cancel, null)
+                                    .setPositiveButton(
+                                        android.R.string.ok
+                                    ) { _, _ ->
+                                        shell(host, cmd.cmds)
+                                    }
+                                    .show()
+                            }
+                            else
+                            {
+                                shell(host, cmd.cmds)
+                            }
                         }
                     }
                 }
@@ -380,6 +393,95 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
         {
             val cmd = "date -s \"$date\""
             shell(host, arrayListOf(cmd))
+        }
+    }
+
+    private fun changeBranch() {
+
+        val runnable = {
+            session?.exec(
+                "cd /data/openpilot && git branch",
+                object : SshSession.OnResponseListener {
+                    override fun onResponse(res: String) {
+                        selectBranch(res)
+                    }
+
+                    override fun onEnd(e: Exception?) {
+                        if (e != null) {
+                            session = null
+                            Snackbar.make(
+                                findViewById(android.R.id.content),
+                                e.localizedMessage,
+                                Snackbar.LENGTH_LONG
+                            )
+                                .show()
+                        }
+                    }
+                })
+        }
+
+
+        if(session != null) {
+            runnable()
+        }
+        else {
+            val host = editHost.text.toString();
+            if(host.isNotEmpty()) {
+                val imm: InputMethodManager =
+                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(editHost.windowToken, 0)
+
+                session = SshSession(host, 8022).also { s ->
+
+                    s.connect(object : SshSession.OnConnectListener {
+                        override fun onConnect() {
+                            runnable()
+                        }
+
+                        override fun onFail(e: Exception) {
+                            Snackbar.make(
+                                findViewById(android.R.id.content),
+                                e.localizedMessage,
+                                Snackbar.LENGTH_LONG
+                            )
+                                .show()
+                        }
+                    })
+                }
+            }
+        }
+
+    }
+
+    private fun selectBranch(res: String) {
+
+        val items = mutableListOf<String>()
+
+        res.split("\n").also {
+            for(tok in it) {
+                tok.trim().also { branch ->
+
+                    if(branch.isNotEmpty())
+                        items.add(branch)
+                }
+            }
+        }
+
+        if(items.size > 0) {
+
+            AlertDialog.Builder(this).also { dialog ->
+                dialog.setTitle(R.string.git_change_branch_desc)
+                dialog.setItems(items.toTypedArray(),
+                    DialogInterface.OnClickListener { dialog, which ->
+
+                        session?.let {
+                            val branch = items[which].replace("*", "").trim()
+                            shell(it.host, arrayListOf("git checkout $branch"))
+                        }
+                    })
+
+                    dialog.create().show()
+            }
         }
     }
 

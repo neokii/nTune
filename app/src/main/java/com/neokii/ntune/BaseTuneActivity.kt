@@ -47,11 +47,41 @@ abstract class BaseTuneActivity : BaseActivity(), ViewPager.OnPageChangeListener
                 val session = SshSession(it.getStringExtra("host")!!, 8022)
                 session.connect(object : SshSession.OnConnectListener {
                     override fun onConnect() {
+
                         session.exec(
-                            "cat ${getRemoteConfFile()}",
+                            "test -f /data/openpilot/selfdrive/ntune.py && echo 1",
                             object : SshSession.OnResponseListener {
                                 override fun onResponse(res: String) {
-                                    start(res)
+
+                                    if(res.trim() != "1") {
+                                        Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            R.string.not_support_ntune,
+                                            Snackbar.LENGTH_LONG
+                                        )
+                                            .show()
+                                    }
+                                    else {
+                                        session.exec(
+                                            "cat ${getRemoteConfFile()}",
+                                            object : SshSession.OnResponseListener {
+                                                override fun onResponse(res: String) {
+                                                    start(res)
+                                                }
+
+                                                override fun onEnd(e: Exception?) {
+
+                                                    if (e != null) {
+                                                        Snackbar.make(
+                                                            findViewById(android.R.id.content),
+                                                            e.localizedMessage,
+                                                            Snackbar.LENGTH_LONG
+                                                        )
+                                                            .show()
+                                                    }
+                                                }
+                                            })
+                                    }
                                 }
 
                                 override fun onEnd(e: Exception?) {
@@ -66,6 +96,7 @@ abstract class BaseTuneActivity : BaseActivity(), ViewPager.OnPageChangeListener
                                     }
                                 }
                             })
+
                     }
 
                     override fun onFail(e: Exception) {

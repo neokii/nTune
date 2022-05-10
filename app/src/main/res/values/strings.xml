@@ -51,6 +51,8 @@ You must be connected to the panda at least once."</string>
     <string name="shell_git_reset_hard">"Git Reset"</string>
     <string name="shell_git_reset_hard_back_1">"Git Reset HEAD~1"</string>
     <string name="shell_git_pull">"Git Pull"</string>
+    <string name="shell_git_change_branch">"Change Branch"</string>
+    <string name="git_change_branch_desc">"Please select a branch (* indicates the current branch)"</string>
 
     <string name="shell_launch_android_settings">"System Settings"</string>
     <string name="shell_kill_android_settings">"Close System Settings"</string>
@@ -109,5 +111,6 @@ Just right: crisp lane centering"</string>
 
     <string name="tune_reset_all_format">"Reset %1$s"</string>
 
+    <string name="not_support_ntune">"This repository does not support nTune."</string>
 
 </resources>
