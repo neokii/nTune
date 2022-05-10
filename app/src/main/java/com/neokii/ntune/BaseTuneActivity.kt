@@ -5,24 +5,25 @@ import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.neokii.ntune.ui.main.SectionsPagerAdapter
+import kotlinx.android.synthetic.main.activity_tune.*
 import org.json.JSONObject
 import java.util.*
 
-abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
+abstract class BaseTuneActivity : BaseActivity(), ViewPager.OnPageChangeListener {
 
     private var viewPager: ViewPager? = null
     private var sectionsPagerAdapter: SectionsPagerAdapter? = null
 
     private var tts: TextToSpeech? = null
 
+    abstract fun getTuneKey(): String
     abstract fun getRemoteConfFile(): String
     abstract fun getItemList(json: JSONObject): ArrayList<TuneItemInfo>
 
@@ -43,7 +44,7 @@ abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeLis
         intent?.let {
 
             try {
-                val session = SshSession(it.getStringExtra("host"), 8022)
+                val session = SshSession(it.getStringExtra("host")!!, 8022)
                 session.connect(object : SshSession.OnConnectListener {
                     override fun onConnect() {
                         session.exec(
@@ -84,6 +85,21 @@ abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeLis
             }
 
         }
+
+        btnResetAll.text = getString(R.string.tune_reset_all_format, getTuneKey())
+
+        btnResetAll.setOnClickListener {
+
+            AlertDialog.Builder(this@BaseTuneActivity)
+                .setMessage(R.string.confirm)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(
+                    android.R.string.ok
+                ) { _, _ ->
+                    resetAll()
+                }
+                .show()
+        }
     }
 
     override fun onDestroy() {
@@ -104,11 +120,13 @@ abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeLis
                 val json = JSONObject(res)
                 val list = getItemList(json)
 
-                sectionsPagerAdapter = SectionsPagerAdapter(
-                    this, supportFragmentManager, list,
-                    it.getStringExtra("host"),
-                    getRemoteConfFile()
-                )
+                sectionsPagerAdapter = it.getStringExtra("host")?.let { host ->
+                    SectionsPagerAdapter(
+                        this, supportFragmentManager, list,
+                        host,
+                        getRemoteConfFile()
+                    )
+                }
                 val viewPager: ViewPager = findViewById(R.id.view_pager)
                 viewPager.adapter = sectionsPagerAdapter
                 val tabs: TabLayout = findViewById(R.id.tabs)
@@ -174,5 +192,53 @@ abstract class BaseTuneActivity : AppCompatActivity(), ViewPager.OnPageChangeLis
             findViewById<View>(R.id.title).visibility = View.GONE
         else
             findViewById<View>(R.id.title).visibility = View.VISIBLE
+    }
+
+    private fun resetAll() {
+        intent?.getStringExtra("host")?.let { host ->
+            try {
+
+                val session = SshSession(host, 8022)
+                session.connect(object : SshSession.OnConnectListener {
+                    override fun onConnect() {
+                        session.exec(
+                            "rm ${getRemoteConfFile()} && echo '1' > /data/params/d/SoftRestartTriggered",
+                            object : SshSession.OnResponseListener {
+                                override fun onResponse(res: String) {
+                                    //sectionsPagerAdapter?.notifyDataSetChanged()
+                                    finish()
+                                }
+
+                                override fun onEnd(e: Exception?) {
+
+                                    if (e != null) {
+                                        Snackbar.make(
+                                            findViewById(android.R.id.content),
+                                            e.localizedMessage,
+                                            Snackbar.LENGTH_LONG
+                                        )
+                                            .show()
+                                    }
+                                }
+                            })
+                    }
+
+                    override fun onFail(e: Exception) {
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            e.localizedMessage,
+                            Snackbar.LENGTH_LONG
+                        )
+                            .show()
+                    }
+
+                })
+            }
+
+            catch (e: Exception) {
+                Toast.makeText(MyApp.getContext(), e.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+
+        }
     }
 }

@@ -4,6 +4,10 @@ import org.json.JSONObject
 
 class GeneralTuneActivity: BaseTuneActivity() {
 
+    override fun getTuneKey(): String {
+        return "General"
+    }
+
     override fun getRemoteConfFile(): String {
         return "/data/ntune/common.json"
     }

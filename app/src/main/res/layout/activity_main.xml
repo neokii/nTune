@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
@@ -26,6 +26,7 @@
                 android:id="@+id/progBar"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
+                android:layout_marginStart="5dp"
                 android:layout_gravity="center_vertical" />
 
             <EditText
@@ -54,6 +55,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="3dp"
                 android:text="@string/btn_comma3" />
+
+            <CheckBox
+                android:id="@+id/checkPortrait"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginStart="10dp"
+                android:button="@drawable/check_rotation" />
 
         </LinearLayout>
 
@@ -89,6 +99,7 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
             android:text="@string/btn_connect_scc" />
+
 
     </LinearLayout>
 

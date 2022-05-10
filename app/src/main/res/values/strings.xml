@@ -107,5 +107,7 @@ Too high: twitchy hyper lane centering, oversteering
 Too low: sloppy, all over lane
 Just right: crisp lane centering"</string>
 
+    <string name="tune_reset_all_format">"Reset %1$s"</string>
+
 
 </resources>

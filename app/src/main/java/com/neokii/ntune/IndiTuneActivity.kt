@@ -4,6 +4,10 @@ import org.json.JSONObject
 
 class IndiTuneActivity: BaseTuneActivity() {
 
+    override fun getTuneKey(): String {
+        return "INDI"
+    }
+
     override fun getRemoteConfFile(): String {
         return "/data/ntune/lat_indi.json"
     }

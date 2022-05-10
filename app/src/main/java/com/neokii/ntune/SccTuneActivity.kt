@@ -4,6 +4,10 @@ import org.json.JSONObject
 
 class SccTuneActivity: BaseTuneActivity() {
 
+    override fun getTuneKey(): String {
+        return "SCC"
+    }
+
     override fun getRemoteConfFile(): String {
         return "/data/ntune/scc.json"
     }

@@ -102,4 +102,6 @@
 너무 높음: 급격한 레인 센터링, 코너시 오버스티어링
 너무 낮음: 느림, 차선을 넘어감
 적당: 좋은 차선 중앙유지"</string>
+
+    <string name="tune_reset_all_format">"%1$s 모두 재설정"</string>
 </resources>

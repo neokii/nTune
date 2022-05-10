@@ -2,6 +2,7 @@ package com.neokii.ntune
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
@@ -25,7 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), SshShell.OnSshListener
+class MainActivity : BaseActivity(), SshShell.OnSshListener
 {
     var session: SshSession? = null
     var shell: SshShell? = null
@@ -40,8 +41,7 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
             //actionBar.setDisplayHomeAsUpEnabled(true)
             try {
                 val packageInfo = packageManager.getPackageInfo(packageName, 0)
-                val universal = if (Feature.FEATURE_UNIVERSAL) "Universal" else "HKG Only"
-                actionBar.title = "${getString(R.string.app_name)} ${packageInfo.versionName} $universal"
+                actionBar.title = "${getString(R.string.app_name)} ${packageInfo.versionName}"
             } catch (e: java.lang.Exception) {
             }
         }
@@ -133,6 +133,14 @@ class MainActivity : AppCompatActivity(), SshShell.OnSshListener
         }
 
         SettingUtil.setBoolean(this, "launched", true)
+
+        checkPortrait?.let { checkBox ->
+            checkBox.isChecked = SettingUtil.getBoolean(applicationContext, "lock_portrait", false)
+            checkBox.setOnClickListener {
+                SettingUtil.setBoolean(applicationContext, "lock_portrait", checkBox.isChecked)
+                updateOrientation()
+            }
+        }
     }
 
     override fun onDestroy() {

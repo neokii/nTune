@@ -6,13 +6,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_ssh_setting.*
 import java.io.InputStreamReader
 
 
-class SshKeySettingActivity: AppCompatActivity() {
+class SshKeySettingActivity: BaseActivity() {
 
     companion object {
         const val PREF_PRIVATE_KEY = "pref_ssh_private_key"

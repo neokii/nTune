@@ -5,17 +5,15 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.exception_capture.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ExceptionCaptureActivity : AppCompatActivity() {
+class ExceptionCaptureActivity : BaseActivity() {
 
     lateinit var editLog: EditText
     private var host: String? = null

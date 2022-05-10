@@ -4,6 +4,10 @@ import org.json.JSONObject
 
 class LqrTuneActivity: BaseTuneActivity() {
 
+    override fun getTuneKey(): String {
+        return "LQR"
+    }
+
     override fun getRemoteConfFile(): String {
         return "/data/ntune/lat_lqr.json"
     }
