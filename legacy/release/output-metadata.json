@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1640,
-      "versionName": "1.6.4-legacy-minSDK23",
-      "outputFile": "nTune-1.6.4-legacy-minSDK23.apk"
+      "versionCode": 1660,
+      "versionName": "1.6.6-legacy-minSDK23",
+      "outputFile": "nTune-1.6.6-legacy-minSDK23.apk"
     }
   ],
   "elementType": "File"
