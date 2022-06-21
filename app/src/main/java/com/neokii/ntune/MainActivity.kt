@@ -400,7 +400,7 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
 
         val runnable = {
             session?.exec(
-                "cd /data/openpilot && git branch",
+                "cd /data/openpilot && git branch -a",
                 object : SshSession.OnResponseListener {
                     override fun onResponse(res: String) {
                         selectBranch(res)
@@ -475,7 +475,7 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
                     DialogInterface.OnClickListener { dialog, which ->
 
                         session?.let {
-                            val branch = items[which].replace("*", "").trim()
+                            val branch = items[which].replace("*", "").replace("remotes/", "-t ").trim()
                             shell(it.host, arrayListOf("git checkout $branch"))
                         }
                     })
