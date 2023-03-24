@@ -86,22 +86,14 @@
                 android:layout_margin="5dp"
                 android:text="@string/btn_connect_general" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnConnectLqr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
-                android:text="@string/btn_connect_lqr" />
-
-            <androidx.appcompat.widget.AppCompatButton
+            <!--androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnConnectIndi"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
-                android:text="@string/btn_connect_indi" />
+                android:text="@string/btn_connect_indi" /-->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnConnectTorque"
@@ -112,13 +104,13 @@
                 android:layout_margin="5dp"
                 android:text="@string/btn_connect_torque" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <!--androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnConnectScc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
-                android:text="@string/btn_connect_scc" />
+                android:text="@string/btn_connect_scc" /-->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSyncTime"

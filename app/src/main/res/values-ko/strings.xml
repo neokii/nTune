@@ -18,7 +18,6 @@
     <string name="btn_connect_general">"일반"</string>
     <string name="btn_connect_torque">"Torque"</string>
     <string name="btn_connect_indi">"INDI"</string>
-    <string name="btn_connect_lqr">"LQR"</string>
     <string name="btn_connect_scc">"SCC"</string>
     <string name="btn_git_account">"Git 계정"</string>
 
@@ -36,12 +35,12 @@
 
     <string name="general_use_live_sr">"고정값이 아닌 학습 steerRatio를 사용합니다."</string>
 
+    <string name="torque_live_params">"콤마의 오토튠을 사용합니다."</string>
+
     <string name="conf_load_failed">"이온에서 설정파일을 불러오지 못하였습니다.
 최소 한번 판다와 연결이 되어야 합니다."</string>
 
     <string name="tune_path_offset_desc">"차량을 오른쪽으로 이동하시려면 증가시키고, 반대의 경우 감소시키세요."</string>
-
-    <string name="tune_lqr_c0_desc">"작을수록 더 부더럽고 묵직해집니다. (기본 1.0)"</string>
 
     <string name="confirm">"진행하시겠습니까?"</string>
 
@@ -72,6 +71,7 @@
     <string name="shell_launch_navdy_settings">"Navdy 설정"</string>
 
     <string name="shell_clear_dtc">"오류코드삭제"</string>
+    <string name="shell_soft_restart">"소프트 재시작"</string>
 
     <string name="btn_ssh_key">"SSH 키"</string>
     <string name="btn_ssh_key_select_private_file">"개인키"</string>

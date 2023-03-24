@@ -32,4 +32,8 @@
         <item name="android:textSize">17sp</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="android:Theme.Dialog">
+        <item name="android:textSize">25sp</item>
+    </style>
+
 </resources>

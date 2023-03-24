@@ -16,15 +16,15 @@ class TorqueTuneActivity: BaseTuneActivity() {
 
         return ArrayList<TuneItemInfo>().apply {
 
-            add(TuneItemInfo("maxLatAccel", json.getDouble("maxLatAccel").toFloat(), 0.5f, 4.0f, 0.1f, 3))
+            //add(TuneItemInfo("liveTorqueParams", json.getDouble("liveTorqueParams").toFloat(),
+            //    0f, 1.0f, 0f, 0, R.string.torque_live_params))
+            add(TuneItemInfo("latAccelFactor", json.getDouble("latAccelFactor").toFloat(), 0.5f, 4.5f, 0.1f, 3))
             add(TuneItemInfo("friction", json.getDouble("friction").toFloat(), 0.0f, 0.2f, 0.01f, 3))
-            add(TuneItemInfo("ki_factor", json.getDouble("ki_factor").toFloat(), 0.0f, 1.0f, 0.1f, 2))
-            add(TuneItemInfo("kd", json.getDouble("kd").toFloat(), 0.0f, 2.0f, 0.1f, 2))
             add(TuneItemInfo("angle_deadzone_v2", json.getDouble("angle_deadzone_v2").toFloat(),
                 0.0f, 2.0f, 0.01f, 2))
 
-            add(TuneItemInfo("useSteeringAngle", json.getDouble("useSteeringAngle").toFloat(),
-                0f, 1.0f, 0f, 0))
+            //add(TuneItemInfo("useSteeringAngle", json.getDouble("useSteeringAngle").toFloat(),
+            //    0f, 1.0f, 0f, 0))
         }
     }
 }

@@ -41,14 +41,17 @@ class SshShell(
             CmdItem(R.string.shell_reset_liveparams, true, arrayListOf("rm /data/params/d/LiveParameters")),
             CmdItem(R.string.shell_remove_realdata, true, arrayListOf("rm -rf /sdcard/realdata")),
             CmdItem(R.string.shell_remove_videos, true, arrayListOf("rm -rf /sdcard/videos")),
-            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./flash.sh && reboot")),
-            CmdItem(R.string.shell_recover_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./recover.sh && reboot")),
+            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./flash.sh")),
+            CmdItem(R.string.shell_recover_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./recover.sh")),
             CmdItem(R.string.shell_launch_navdy_settings, false, arrayListOf("am start -n com.neokii.openpilot/.MainActivity")),
-            CmdItem(R.string.shell_clear_dtc, true, arrayListOf("cd /data/openpilot/selfdrive/debug", "pkill -f boardd", "./clear_dtc.py",
-                "reboot")),
+            CmdItem(R.string.shell_clear_dtc, true, arrayListOf("cd /data/openpilot/selfdrive/debug", "pkill -f boardd", "./clear_dtc.py")),
             CmdItem(R.string.shell_rebuild, true, arrayListOf("cd /data/openpilot", "scons -c", "rm .sconsign.dblite",
                 "rm -rf /tmp/scons_cache", "rm prebuilt",
                 "reboot")),
+            CmdItem(R.string.shell_soft_restart, true, arrayListOf("tmux kill-session -t comma",
+                "rm -f /tmp/safe_staging_overlay.lock",
+                "PYTHONPATH=/data/openpilot\npython3 -c \"from system.hardware import HARDWARE;HARDWARE.set_power_save(False)\"",
+                "tmux new -s comma -d \"echo \$\$ > /dev/cpuset/app/tasks && echo \$PPID > /dev/cpuset/app/tasks && /data/openpilot/launch_openpilot.sh\"")),
             CmdItem(R.string.shell_reboot, true, arrayListOf("reboot"))
         )
 
@@ -64,13 +67,20 @@ class SshShell(
             CmdItem(R.string.shell_reset_liveparams, true, arrayListOf("rm /data/params/d/LiveParameters")),
             CmdItem(R.string.shell_remove_realdata, true, arrayListOf("rm -rf /data/media/0/realdata")),
             CmdItem(R.string.shell_remove_videos, true, arrayListOf("rm -rf /data/media/0/videos")),
-            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./flash.sh && sudo reboot")),
-            CmdItem(R.string.shell_recover_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./recover.sh && sudo reboot")),
-            CmdItem(R.string.shell_clear_dtc, true, arrayListOf("cd /data/openpilot/selfdrive/debug", "pkill -f boardd", "./clear_dtc.py",
-                "sudo reboot")),
+            CmdItem(R.string.shell_flash_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./flash.sh")),
+            CmdItem(R.string.shell_recover_panda, true, arrayListOf("cd /data/openpilot/panda/board", "tmux kill-server", "./recover.sh")),
+            CmdItem(R.string.shell_clear_dtc, true, arrayListOf("cd /data/openpilot/selfdrive/debug", "pkill -f boardd", "./clear_dtc.py")),
             CmdItem(R.string.shell_rebuild, true, arrayListOf("cd /data/openpilot", "scons -c", "rm .sconsign.dblite",
                 "rm -rf /tmp/scons_cache", "rm prebuilt",
                 "sudo reboot")),
+            CmdItem(R.string.shell_soft_restart, true, arrayListOf(
+                "tmux new -d -s tmp;",
+                        "tmux split-window -v -t tmp;",
+                        "tmux send-keys -t tmp.0 \"/data/openpilot/launch_openpilot.sh\" ENTER",
+                        "tmux send-keys -t tmp.1 \"tmux kill-session -t comma\" ENTER",
+                        "tmux send-keys -t tmp.1 \"tmux rename-session -t tmp comma\" ENTER",
+                        "tmux send-keys -t tmp.1 \"exit\" ENTER"
+            )),
             CmdItem(R.string.shell_reboot, true, arrayListOf("sudo reboot")),
         )
 

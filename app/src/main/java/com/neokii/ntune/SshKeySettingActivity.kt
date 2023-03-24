@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_ssh_setting.*
@@ -54,7 +55,10 @@ class SshKeySettingActivity: BaseActivity() {
                     editPrivateKey.setText("")
                     editPublicKey.setText("")
                 }
-                .show()
+                .create().also {
+                    it.findViewById<TextView>(android.R.id.message)?.textSize = 40f
+                    it.show()
+                }
         }
 
         editPassword.addTextChangedListener(passwordListener)

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager.widget.ViewPager
@@ -49,7 +50,7 @@ abstract class BaseTuneActivity : BaseActivity(), ViewPager.OnPageChangeListener
                     override fun onConnect() {
 
                         session.exec(
-                            "test -f /data/openpilot/selfdrive/ntune.py && echo 1",
+                            "test -f /data/openpilot/selfdrive/controls/ntune.py && echo 1",
                             object : SshSession.OnResponseListener {
                                 override fun onResponse(res: String) {
 
@@ -129,7 +130,10 @@ abstract class BaseTuneActivity : BaseActivity(), ViewPager.OnPageChangeListener
                 ) { _, _ ->
                     resetAll()
                 }
-                .show()
+                .create().also {
+                    it.findViewById<TextView>(android.R.id.message)?.textSize = 40f
+                    it.show()
+                }
         }
     }
 

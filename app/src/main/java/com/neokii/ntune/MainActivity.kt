@@ -14,6 +14,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
@@ -35,6 +36,8 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
+
+
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayShowHomeEnabled(true)
@@ -53,24 +56,20 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
                 editHost.setText(it)
         }
 
-        btnConnectLqr.setOnClickListener {
-            handleConnect(LqrTuneActivity::class.java)
-        }
-
-        btnConnectIndi.setOnClickListener {
+        /*btnConnectIndi.setOnClickListener {
             handleConnect(IndiTuneActivity::class.java)
-        }
+        }*/
 
         btnConnectTorque.setOnClickListener {
             handleConnect(TorqueTuneActivity::class.java)
         }
 
-        btnConnectScc.setOnClickListener {
+        /*btnConnectScc.setOnClickListener {
             handleConnect(SccTuneActivity::class.java)
-        }
+        }*/
 
-        if(Feature.FEATURE_UNIVERSAL)
-            btnConnectScc.visibility = View.GONE
+        //if(Feature.FEATURE_UNIVERSAL)
+        //    btnConnectScc.visibility = View.GONE
 
         btnSshKey.setOnClickListener {
             val intent = Intent(this, SshKeySettingActivity::class.java)
@@ -200,10 +199,9 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
     private fun updateControls(pending: Boolean)
     {
         btnGeneral.isEnabled = !pending
-        btnConnectLqr.isEnabled = !pending
-        btnConnectIndi.isEnabled = !pending
+        //btnConnectIndi.isEnabled = !pending
         btnConnectTorque.isEnabled = !pending
-        btnConnectScc.isEnabled = !pending
+        //btnConnectScc.isEnabled = !pending
 
         btnExceptionCapture.isEnabled = !pending
     }
@@ -310,7 +308,10 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
                                     ) { _, _ ->
                                         shell(host, cmd.cmds)
                                     }
-                                    .show()
+                                    .create().also {
+                                        it.findViewById<TextView>(android.R.id.message)?.textSize = 40f
+                                        it.show()
+                                    }
                             }
                             else
                             {
@@ -480,7 +481,10 @@ class MainActivity : BaseActivity(), SshShell.OnSshListener
                         }
                     })
 
-                    dialog.create().show()
+                    dialog.create().also {
+                        it.findViewById<TextView>(android.R.id.message)?.textSize = 40f
+                        it.show()
+                    }
             }
         }
     }

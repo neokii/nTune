@@ -28,11 +28,11 @@ class GeneralTuneActivity: BaseTuneActivity() {
         list.add(TuneItemInfo("steerRatio", json.getDouble("steerRatio").toFloat(),
             5.0f, 25.0f, 0.1f, 2))
 
-        if(!Feature.FEATURE_UNIVERSAL)
+        /*if(!Feature.FEATURE_UNIVERSAL)
         {
             list.add(TuneItemInfo("steerRateCost", json.getDouble("steerRateCost").toFloat(),
                 0.1f, 1.5f, 0.05f, 3))
-        }
+        }*/
 
         list.add(TuneItemInfo("steerActuatorDelay", json.getDouble("steerActuatorDelay").toFloat(),
             0.0f, 0.8f, 0.05f, 3))

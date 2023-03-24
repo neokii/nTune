@@ -6,14 +6,16 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
-    buildFeatures.viewBinding = true
+    buildFeatures {
+        viewBinding = true
+    }
 
     defaultConfig {
         applicationId "com.neokii.ntune"
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode 1660
-        versionName "1.6.6"
+        versionCode 1840
+        versionName "1.8.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
