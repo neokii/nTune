@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1840,
-      "versionName": "1.8.4",
-      "outputFile": "nTune-1.8.4.apk"
+      "versionCode": 1850,
+      "versionName": "1.8.5",
+      "outputFile": "nTune-1.8.5.apk"
     }
   ],
   "elementType": "File"

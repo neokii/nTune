@@ -19,6 +19,9 @@ class GeneralTuneActivity: BaseTuneActivity() {
         list.add(TuneItemInfo("pathOffset", json.getDouble("pathOffset").toFloat(),
             -1.0f, 1.0f, 0.01f, 2, R.string.tune_path_offset_desc))
 
+        list.add(TuneItemInfo("pathFactor", json.getDouble("pathFactor").toFloat(),
+            0.6f, 1.2f, 0.1f, 2))
+
         if(!Feature.FEATURE_UNIVERSAL)
         {
             list.add(TuneItemInfo("useLiveSteerRatio", json.getDouble("useLiveSteerRatio").toFloat(),
