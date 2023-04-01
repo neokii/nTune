@@ -42,6 +42,8 @@ You must be connected to the panda at least once."</string>
     <string name="confirm">"Are you sure?"</string>
 
     <string name="tune_path_offset_desc">"Increase to move the vehicle to the right, decrease to move it to the left."</string>
+    <string name="tune_path_factor_desc">"If oversteer occurs in a corner, reduce it."</string>
+
     <string name="shell_create_prebuilt">"Create prebuilt"</string>
     <string name="shell_remove_prebuilt">"Remove prebuilt"</string>
 

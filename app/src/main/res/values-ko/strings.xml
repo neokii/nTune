@@ -41,6 +41,7 @@
 최소 한번 판다와 연결이 되어야 합니다."</string>
 
     <string name="tune_path_offset_desc">"차량을 오른쪽으로 이동하시려면 증가시키고, 반대의 경우 감소시키세요."</string>
+    <string name="tune_path_factor_desc">"코너에서 오버스티어일 경우 줄이세요."</string>
 
     <string name="confirm">"진행하시겠습니까?"</string>
 
