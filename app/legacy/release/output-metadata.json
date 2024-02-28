@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1870,
-      "versionName": "1.8.7-legacy-minSDK23",
-      "outputFile": "nTune-1.8.7-legacy-minSDK23.apk"
+      "versionCode": 1880,
+      "versionName": "1.8.8-legacy-minSDK23",
+      "outputFile": "nTune-1.8.8-legacy-minSDK23.apk"
     }
   ],
   "elementType": "File"

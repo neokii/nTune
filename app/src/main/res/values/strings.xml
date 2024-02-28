@@ -41,7 +41,7 @@ You must be connected to the panda at least once."</string>
 
     <string name="confirm">"Are you sure?"</string>
 
-    <string name="tune_long_lead_sensitivity_desc">"Sensitivity lead, the higher it is, the more sensitive the response to the lead."</string>
+    <string name="tune_long_starting_factor_desc">"Acceleration at start, increasing this value will make the acceleration faster."</string>
 
     <string name="tune_path_offset_desc">"Increase to move the vehicle to the right, decrease to move it to the left."</string>
     <string name="tune_path_factor_desc">"If oversteer occurs in a corner, reduce it."</string>

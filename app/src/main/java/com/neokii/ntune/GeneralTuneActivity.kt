@@ -16,8 +16,8 @@ class GeneralTuneActivity: BaseTuneActivity() {
 
         val list = ArrayList<TuneItemInfo>()
 
-        list.add(TuneItemInfo("longLeadSensitivity", json.getDouble("longLeadSensitivity").toFloat(),
-            0.5f, 1.2f, 0.1f, 1, R.string.tune_long_lead_sensitivity_desc))
+        list.add(TuneItemInfo("longStartingFactor", json.getDouble("longStartingFactor").toFloat(),
+            0.7f, 1.8f, 0.1f, 1, R.string.tune_long_starting_factor_desc))
 
         list.add(TuneItemInfo("pathFactor", json.getDouble("pathFactor").toFloat(),
             0.9f, 1.1f, 0.01f, 2, R.string.tune_path_factor_desc))

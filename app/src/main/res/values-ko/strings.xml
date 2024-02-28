@@ -40,7 +40,7 @@
     <string name="conf_load_failed">"이온에서 설정파일을 불러오지 못하였습니다.
 최소 한번 판다와 연결이 되어야 합니다."</string>
 
-    <string name="tune_long_lead_sensitivity_desc">"선행차에 대한 민감도, 높을 수록 선행차에 더 민감하게 반응합니다."</string>
+    <string name="tune_long_starting_factor_desc">"출발시 가속, 이 값을 높히면 초반가속이 더 빨라집니다."</string>
 
     <string name="tune_path_offset_desc">"차량을 오른쪽으로 이동하시려면 증가시키고, 반대의 경우 감소시키세요."</string>
     <string name="tune_path_factor_desc">"코너에서 오버스티어일 경우 줄이세요."</string>
